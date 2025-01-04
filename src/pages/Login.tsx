@@ -29,7 +29,7 @@ const Login: React.FC = () => {
     setError(null);
     try {
       const data = await loginUser(credentials);
-      login(data.access_token, data.user);
+      await login(data.access_token, data.user);
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Giriş başarısız.');
@@ -39,52 +39,75 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full bg-white p-8 rounded shadow">
-        <h2 className="text-2xl font-bold mb-6 text-center">Giriş Yap</h2>
-        {error && (
-          <div className="mb-4 text-red-500 text-center">{error}</div>
-        )}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="username">
-              Kullanıcı Adı
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={credentials.username}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 mb-2" htmlFor="password">
-              Şifre
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleChange}
-              required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
-          >
-            {loading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
-          </button>
-        </form>
+    <>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 py-32">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            alt="Your Company"
+            src="./nemcaLogo.png"
+            className="mx-auto h-10 w-auto"
+          />
+          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Nemca Admin Panel</h2>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          {error && (
+            <div className="mb-4 text-red-500 text-center">{error}</div>
+          )}
+
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="username" className="block text-sm/6 font-medium text-white">
+                Username
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  type="username"
+                  required
+                  value={credentials.username}
+                  onChange={handleChange}
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mt-4">
+                <label htmlFor="password" className="block text-sm/6 font-medium text-white">
+                  Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  value={credentials.password}
+                  onChange={handleChange}
+                  autoComplete="current-password"
+                  className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                />
+              </div>
+            </div>
+
+            <div className='mt-8'>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              >
+               { loading ? 'Giriş Yapiliyor...'  :  'Giriş Yap'  }
+              </button>
+            </div>
+
+          </form>
+
+        </div>
       </div>
-    </div>
-  );
+    </>
+  )
 };
 
 export default Login;

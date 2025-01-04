@@ -18,4 +18,19 @@ export interface LoginCredentials {
 export interface AuthResponse {
     access_token: string;
     user: User;
+    token_type: string;
+}
+
+
+export interface UserBase {
+    username: string;
+    email: string; 
+}
+
+export interface UserRead extends UserBase {
+    id: number;
+}
+
+export interface UserUpdate {
+    username: string;
 }
