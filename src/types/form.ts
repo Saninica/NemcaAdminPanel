@@ -1,10 +1,15 @@
-export type FieldType = 'text' | 'textarea' | 'select' | 'file' | 'number' | 'email' | 'password';
+export type InputType = 'text' | 'number' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'date' | 'img';
 
-export interface FormField<T, K extends keyof T = keyof T> {
+export interface Option {
+  label: string;
+  value: string | number;
+}
+
+export interface FormField<T, K extends keyof T> {
   name: K;
   label: string;
-  type: FieldType;
+  type: InputType;
   placeholder?: string;
-  options?: { label: string; value: string }[]; // For select fields
-  required?: boolean;
+  required: boolean;
+  options?: Option[]; // For select, radio, etc.
 }

@@ -1,3 +1,5 @@
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+
 interface BaseTableProps<T extends Record<string, any>> {
   pageName: string;
   data: T[];
@@ -37,7 +39,10 @@ export default function BaseTable<T extends Record<string, any>>({
           <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
-                <h1 className="text-base font-semibold text-white">{pageName}</h1>
+                <h1 className="text-base font-semibold text-white">
+                <button  onClick={() => { history.back() }}>                 <ArrowLeftCircleIcon className="h-6 w-6 inline-block ml-2" />
+                </button>
+                {pageName}</h1>
                 <p className="mt-2 text-sm text-gray-300">
                   A list of all the {pageName} in your account including their details.
                 </p>

@@ -1,55 +1,93 @@
 import BaseFormLayout from './BaseForm';
 import { PageContentSchema } from '../types/page';
 import useContentStore from '../store/useContentsStore';
-import { FormField } from '../types/form';
+import { FormField, InputType } from '../types/form';
+import { useEffect, useState } from 'react';
+import { fetchModelMetadata, ModelMetadataResponse } from '../api/metadata';
+import { useForm } from 'react-hook-form';
 
-const pageContentFields: FormField<PageContentSchema, keyof PageContentSchema>[] = [
-  {
-    name: 'page_id',
-    label: 'Page ID',
-    type: 'number' as const,
-    placeholder: 'Enter page ID',
-    required: true,
-  },
-  {
-    name: 'language_code',
-    label: 'Language',
-    type: 'select' as const,
-    options: [
-      { label: 'English', value: 'en' },
-      { label: 'Spanish', value: 'es' },
-      // Add more languages as needed
-    ],
-    required: true,
-  },
-  {
-    name: 'title',
-    label: 'Title',
-    type: 'text' as const,
-    placeholder: 'Enter title',
-    required: true,
-  },
-  {
-    name: 'body',
-    label: 'Body',
-    type: 'textarea' as const,
-    placeholder: 'Enter content body',
-    required: true,
-  },
-  // Add more fields as needed
-];
 
 export default function PageContentForm() {
+  const [fields, setFields] = useState<FormField<any, any>[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const initializeForm = async () => {
+      try {
+        setLoading(true);
+        const metadata: ModelMetadataResponse = await fetchModelMetadata();
+        const modelMetadata = metadata.models['PageContent'];
+
+        if (!modelMetadata) {
+          throw new Error(`Model PageContent not found in metadata.`);
+        }
+        
+        const dynamicFields: FormField<any, any>[] = [];
+        
+        for (const [fieldName, fieldInfo] of Object.entries(modelMetadata)) {
+          const { type, nullable, foreign_key } = fieldInfo;
+          
+          let inputType: InputType = 'text';
+          
+          switch (type) {
+            case 'int':
+              inputType = 'number';
+              break;
+            case 'str':
+              inputType = 'text';
+              if (fieldName.includes('image') || fieldName.includes('img')) {
+                inputType = 'img';
+              }
+              break;
+            case 'textarea':
+              inputType = 'textarea';
+              break;
+            default:
+              inputType = 'text';
+          }
+                   
+          
+          // Customize label (optional)
+          const label = fieldName
+            .replace('_', ' ')
+            .replace(/\b\w/g, (char) => char.toUpperCase());
+          
+          dynamicFields.push({
+            name: fieldName,
+            label,
+            type: inputType,
+            placeholder: `Enter ${label}`,
+            required: !nullable,
+          });
+        }
+        
+        setFields(dynamicFields);
+        setLoading(false);
+      } catch (err: any) {
+        console.error(err);
+        setError(err.message || 'Error fetching form metadata.');
+        setLoading(false);
+      }
+    };
+    
+    initializeForm();
+  }, []);
+
+
+
   const { createPageContent } = useContentStore();
+  const { reset } = useForm<PageContentSchema>();
+
 
   const handleSubmit = async (data: PageContentSchema) => {
     await createPageContent(data);
-    // Handle post-submission logic
+    reset(); // Reset the form after successful submission
   };
 
   return (
     <BaseFormLayout<PageContentSchema>
-      fields={pageContentFields}
+      fields={fields}
       onSubmit={handleSubmit}
       submitButtonText="Create Content"
     />
