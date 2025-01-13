@@ -22,9 +22,11 @@ export interface PageStore {
 export interface PageContentSchema {
     id: number;
     page_id: number;
+    website_id: number;
     language_code: string;
     title: string;
     body: string;
+    cover_image: string;
 }
 
 

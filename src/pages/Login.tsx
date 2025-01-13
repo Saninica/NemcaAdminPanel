@@ -32,8 +32,7 @@ const Login: React.FC = () => {
       await login(data.access_token, data.user);
       navigate('/dashboard');
     } catch (err: any) {
-      console.log(err);
-      setError(err.response?.data?.detail || 'Giriş başarısız.');
+      setError(err.response?.data?.detail || 'Error on login.');
     } finally {
       setLoading(false);
     }

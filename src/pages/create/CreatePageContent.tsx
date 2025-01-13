@@ -1,5 +1,5 @@
-import PageContentForm from '../components/PageContentForm';
-import useContentStore from '../store/useContentsStore';
+import PageContentForm from '../../components/forms/PageContentForm';
+import useContentStore from '../../store/useContentsStore';
 import { ToastContainer } from 'react-toastify';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';

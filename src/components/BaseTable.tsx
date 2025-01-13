@@ -1,4 +1,4 @@
-import { ArrowLeftCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
 
 interface BaseTableProps<T extends Record<string, any>> {
   pageName: string;
@@ -12,25 +12,25 @@ interface Column<T> {
   render?: (item: T) => React.ReactNode;
 }
 
-export default function BaseTable<T extends Record<string, any>>({ 
-  pageName, 
+export default function BaseTable<T extends Record<string, any>>({
+  pageName,
   data,
   createHref,
 }: BaseTableProps<T>) {
 
   function generateColumns(data: T[]): Column<T>[] {
     if (!data || data.length === 0) return [];
-  
+
     const keys = Object.keys(data[0]) as Array<keyof T>;
-  
+
     return keys.map((key) => ({
       header: String(key.toString().toUpperCase()),
       accessor: key,
     }));
   }
-  
 
-  const columns: Column<T>[] =  generateColumns(data);
+
+  const columns: Column<T>[] = generateColumns(data);
 
   return (
     <div className="">
@@ -40,9 +40,9 @@ export default function BaseTable<T extends Record<string, any>>({
             <div className="sm:flex sm:items-center">
               <div className="sm:flex-auto">
                 <h1 className="text-base font-semibold text-white">
-                <button  onClick={() => { history.back() }}>                 <ArrowLeftCircleIcon className="h-6 w-6 inline-block ml-2" />
-                </button>
-                {pageName}</h1>
+                  <button className="px-8" onClick={() => { history.back() }}>                 <ArrowLeftCircleIcon className="h-6 w-6 inline-block ml-2" />
+                  </button>
+                  {pageName}</h1>
                 <p className="mt-2 text-sm text-gray-300">
                   A list of all the {pageName} in your account including their details.
                 </p>

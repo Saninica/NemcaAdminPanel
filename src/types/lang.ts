@@ -1,6 +1,7 @@
 export interface LanguageBase {
     code: string; // e.g., 'en', 'tr'
     name: string; // e.g., 'English', 'Turkish'
+    website_id: number; // e.g., 1, 2
 }
   
   
@@ -10,4 +11,11 @@ export interface LangStore  {
   langs: LanguageBase[] | [];
   langLoading: boolean;
   langError: boolean;
+}
+
+
+export interface LangSchema {
+  code: string;
+  name: string;
+  website_id: number;
 }

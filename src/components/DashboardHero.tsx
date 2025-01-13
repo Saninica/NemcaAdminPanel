@@ -4,6 +4,7 @@ import {
     PhotoIcon,
 } from '@heroicons/react/24/outline'
 import useAuthStore from '../store/useAuthStore';
+import { ROUTES } from '../constants/routes';
 
 
 
@@ -17,14 +18,14 @@ export default function DashboardHero() {
             description: 'Web sitelerinin dil tercihleri.',
             icon: Bars4Icon,
             background: 'bg-pink-500',
-            href: '/languages',
+            href: ROUTES.LANGUAGES,
         },
         {
             title: 'Sayfa Oluştur',
             description: 'Web sitelerindeki sayfalar. Home, About Us v.b.',
             icon: CalendarIcon,
             background: 'bg-yellow-500',
-            href: '/pages',
+            href: ROUTES.PAGES,
         },
         
         {
@@ -32,8 +33,30 @@ export default function DashboardHero() {
             description: 'Oluşturulan sayfalara ait içerikler.',
             icon: PhotoIcon,
             background: 'bg-green-500',
-            href: '/contents',
+            href: ROUTES.CONTENTS,
         },
+
+        {
+            title: 'Websitesi Oluştur',
+            description: 'Web siteleri oluşturun.',
+            icon: PhotoIcon,
+            background: 'bg-green-500',
+            href: ROUTES.WEBSITES,
+        },
+        {
+            title: 'Metatags Oluştur',
+            description: 'Web siteleri için meta tag oluşturun.',
+            icon: PhotoIcon,
+            background: 'bg-green-500',
+            href: ROUTES.METATAGS,
+        },
+        {
+            title: 'Announcement Oluştur',
+            description: 'Duyuru oluşturun.',
+            icon: PhotoIcon,
+            background: 'bg-green-500',
+            href: ROUTES.ANNOUNCEMENTS
+        }
 
     ]
 
@@ -45,7 +68,7 @@ export default function DashboardHero() {
         <div>
             <h2 className="text-base font-semibold text-white">Hoş Geldiniz, {user?.username}</h2>
             <p className="mt-1 text-sm text-gray-50">
-                You haven’t created a project yet. Get started by selecting a template or start from an empty project.
+                Aşağıda sahip olduğunuz websiteleri listelenmektedir. Websitesini seçerek içeriklerini düzenleyebilirsiniz.
             </p>
             <ul role="list" className="mt-6 grid grid-cols-1 gap-6 border-b border-t border-gray-200 py-6 sm:grid-cols-2">
                 {items.map((item, itemIdx) => (

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import BaseTable from '../components/BaseTable';
-import Navbar from '../components/Navbar';
-import useLangStore from '../store/useLangStore';
+import BaseTable from '../../components/BaseTable';
+import Navbar from '../../components/Navbar';
+import useLangStore from '../../store/useLangStore';
+import { ROUTES } from '../../constants/routes';
 
 const Languages: React.FC = () => {
 
@@ -22,7 +23,7 @@ const Languages: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName = 'Dil' data={langs} />
+        <BaseTable pageName = 'Dil' data={langs} createHref={ROUTES.CREATE_LANGUAGE} />
 
       </main>
 

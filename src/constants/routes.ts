@@ -1,0 +1,20 @@
+export const ROUTES = {
+    LOGIN: '/',
+    DASHBOARD: "/dashboard/",
+    LANGUAGES: "/languages/",
+    PAGES: "/pages/",
+    CONTENTS: "/contents/",
+    WEBSITES: "/websites/",
+    ANNOUNCEMENTS: "/announcements/",
+    METATAGS: "/metatags/",
+
+    CREATE_LANGUAGE: "/create/language/",
+    CREATE_PAGE: "/create/page/",
+    CREATE_CONTENT: "/create/content/",
+    CREATE_WEBSITE: "/create/website/",
+    CREATE_ANNOUNCEMENT: "/create/announcement/",
+    CREATE_METATAG: "/create/metatag/",
+    //RESET_PASS: '/resetpass/:id/:token/',
+    //FORGOT_PASS: '/forgot-password',
+    //RESET_PASS: '/reset-password/:token',
+};

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import BaseTable from '../components/BaseTable';
-import Navbar from '../components/Navbar';
-import usePageStore from '../store/usePageStore';
+import BaseTable from '../../components/BaseTable';
+import Navbar from '../../components/Navbar';
+import usePageStore from '../../store/usePageStore';
+import { ROUTES } from '../../constants/routes';
 
 const Pages: React.FC = () => {
 
@@ -22,7 +23,7 @@ const Pages: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName = 'Sayfa' data={pages} />
+        <BaseTable pageName = 'Sayfa' data={pages} createHref={ROUTES.CREATE_PAGE} />
 
       </main>
 

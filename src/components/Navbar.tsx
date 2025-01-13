@@ -13,8 +13,8 @@ export default function Navbar() {
 
     const navigation = [
         { name: 'Dashboard', href: '/dashboard', current: true },
-        { name: 'Models', href: '#', current: false },
-        { name: 'Projects', href: '#', current: false },
+        //{ name: 'Models', href: '#', current: false },
+        //{ name: 'Projects', href: '#', current: false },
     ]
     const logout = useAuthStore((state) => state.logout);
     const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function Navbar() {
                         <div className="flex shrink-0 items-center">
                             <img
                                 alt="Your Company"
-                                src="./nemcaLogo.png"
+                                src="/nemcaLogo.png"
                                 className="h-8 w-auto"
                             />
                         </div>
