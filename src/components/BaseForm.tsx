@@ -20,7 +20,7 @@ function BaseFormLayout<T extends FieldValues>({
   } = useForm<T>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 divide-y ">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 divide-y" encType="multipart/form-data">
       <div className="space-y-8 divide-y ">
         {/* Form Section */}
         <div className="pt-8">

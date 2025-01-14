@@ -29,6 +29,10 @@ export interface PageContentSchema {
     cover_image: string;
 }
 
+export interface PageContentFormData extends Omit<PageContentSchema, 'cover_image'> {
+    cover_image: FileList;
+}
+
 
 export interface PageContentCreate {
     page_id: number;
@@ -41,6 +45,6 @@ export interface PageContentStore {
     pageContents: PageContentSchema[] | [];
     pageContentError: boolean;
     pageContentLoading: boolean;
-    createPageContent: (content: PageContentSchema) => Promise<void>;
+    createPageContent: (content: FormData) => Promise<void>;
     getPageContents: (limit: number, skip: number) => Promise<void>;
 }

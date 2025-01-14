@@ -1,7 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
-import LanguagesForm from '../../components/forms/LanguagesForm';
 import usePageStore from '../../store/usePageStore';
 import PageForm from '../../components/forms/PageForm';
 

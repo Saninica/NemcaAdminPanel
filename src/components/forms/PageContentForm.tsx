@@ -1,5 +1,5 @@
 import BaseFormLayout from '../BaseForm';
-import { PageContentSchema } from '../../types/page';
+import { PageContentFormData, PageContentSchema } from '../../types/page';
 import useContentStore from '../../store/useContentsStore';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ export default function PageContentForm() {
   const [error, setError] = useState<string | null>(null);
 
   const { createPageContent } = useContentStore();
-  const { reset } = useForm<PageContentSchema>();
+  const { reset } = useForm<PageContentFormData>();
 
   useEffect(() => {
     initializePageContentForm('PageContent');
@@ -34,13 +34,26 @@ export default function PageContentForm() {
 
 
 
-  const handleSubmit = async (data: PageContentSchema) => {
-    await createPageContent(data);
-    reset(); // Reset the form after successful submission
+  const handleSubmit = async (data: PageContentFormData) => {
+    const formData = new FormData();
+
+    formData.append('title', data.title);
+    formData.append('body', data.body);
+
+    formData.append('cover_image', data.cover_image[0]);
+    formData.append('page_id', data.page_id.toString());
+    formData.append('language_code', data.language_code);
+    formData.append('website_id', data.website_id.toString());
+    
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+    await createPageContent(formData);
+    reset();
   };
 
   return (
-    <BaseFormLayout<PageContentSchema>
+    <BaseFormLayout<PageContentFormData>
       fields={fields}
       onSubmit={handleSubmit}
       submitButtonText="Create Content"

@@ -6,9 +6,14 @@ export interface WebsiteBase {
 
 
 export interface WebsiteStore {
-    createWebsite: (website: WebsiteBase) => Promise<void>;
+    createWebsite: (formData: FormData) => Promise<void>;
     getWebsites: (limit: number, skip: number) => Promise<void>;
     websites: WebsiteBase[] | [];
     websiteLoading: boolean;
     websiteError: boolean;
+}
+
+
+export interface WebsiteFormData extends Omit<WebsiteBase, 'favicon_image'> {
+    favicon_image: FileList;
 }

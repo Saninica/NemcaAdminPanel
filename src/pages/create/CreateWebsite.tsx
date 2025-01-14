@@ -1,7 +1,6 @@
 import { ToastContainer } from 'react-toastify';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
-import LanguagesForm from '../../components/forms/LanguagesForm';
 import useWebsite from '../../store/useWebsite';
 import WebsiteForm from '../../components/forms/WebsiteForm';
 
@@ -17,7 +16,7 @@ export default function CreateWebsite() {
                 Create Website
             </h1>
             <WebsiteForm />
-            {websiteLoading ? <p className="text-gray-400">Creating website...</p> : null}
+            {websiteLoading && <p className="text-gray-400">Creating website...</p>}
             {websiteError && <p className="text-red-500">Error creating website content.</p>}
             <ToastContainer />
         </div>

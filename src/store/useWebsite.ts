@@ -1,4 +1,4 @@
-import { WebsiteBase, WebsiteStore } from "../types/website";
+import { WebsiteStore } from "../types/website";
 import axiosInstance from '../api/axiosInstance';
 import { create } from 'zustand';
 
@@ -9,13 +9,31 @@ const useWebsite = create<WebsiteStore>()(
         websites: [],
         websiteError: false,
         websiteLoading: false,
-        createWebsite: async (website: WebsiteBase) => {
+        createWebsite: async (formData: FormData) => {
             set({ websiteLoading: true });
-            const res = await axiosInstance.post('website/', website);
-            if (res.status === 200) {
-                set({ websiteLoading: false });
-                get().getWebsites(15, 0);
-            } else {
+            try {
+                const name = formData.get('name') as string;
+                const domain_url = formData.get('domain_url') as string;
+                
+                const fileFormData = new FormData();
+                fileFormData.append('favicon_image', formData.get('favicon_image') as File);
+
+                const res = await axiosInstance.post(`website/?name=${encodeURIComponent(name)}&domain_url=${encodeURIComponent(domain_url)}`, 
+                fileFormData,  {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                if (res.status === 200 || res.status === 201) {
+                    set({ websiteLoading: false });
+                    get().getWebsites(15, 0);
+                    set({ websiteError: false, websiteLoading: false });
+                } else {
+                    set({ websiteError: true, websiteLoading: false });
+                }
+            } catch (error) {
+                console.error("Error creating website:", error);
                 set({ websiteError: true, websiteLoading: false });
             }
         },

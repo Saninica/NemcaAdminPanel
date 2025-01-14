@@ -2,6 +2,9 @@ import {
     Bars4Icon,
     CalendarIcon,
     PhotoIcon,
+    GlobeAltIcon,
+    DocumentMagnifyingGlassIcon,
+    SpeakerWaveIcon
 } from '@heroicons/react/24/outline'
 import useAuthStore from '../store/useAuthStore';
 import { ROUTES } from '../constants/routes';
@@ -15,7 +18,7 @@ export default function DashboardHero() {
     const items = [
         {
             title: 'Dil Oluştur',
-            description: 'Web sitelerinin dil tercihleri.',
+            description: 'Web sitelerinin dil tercihleri oluşturun. TR, EN v.b.',
             icon: Bars4Icon,
             background: 'bg-pink-500',
             href: ROUTES.LANGUAGES,
@@ -38,23 +41,23 @@ export default function DashboardHero() {
 
         {
             title: 'Websitesi Oluştur',
-            description: 'Web siteleri oluşturun.',
-            icon: PhotoIcon,
-            background: 'bg-green-500',
+            description: 'Web sitelerinizi oluşturun.',
+            icon: GlobeAltIcon,
+            background: 'bg-red-500',
             href: ROUTES.WEBSITES,
         },
         {
             title: 'Metatags Oluştur',
-            description: 'Web siteleri için meta tag oluşturun.',
-            icon: PhotoIcon,
-            background: 'bg-green-500',
+            description: 'Web siteniz için meta tag oluşturun.',
+            icon: DocumentMagnifyingGlassIcon,
+            background: 'bg-indigo-500',
             href: ROUTES.METATAGS,
         },
         {
-            title: 'Announcement Oluştur',
-            description: 'Duyuru oluşturun.',
-            icon: PhotoIcon,
-            background: 'bg-green-500',
+            title: 'Duyuru Oluştur',
+            description: 'Web sitenizde görüntülenecek duyurulari oluşturun.',
+            icon: SpeakerWaveIcon,
+            background: 'bg-gray-500',
             href: ROUTES.ANNOUNCEMENTS
         }
 
