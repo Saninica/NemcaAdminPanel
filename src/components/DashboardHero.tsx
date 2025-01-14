@@ -4,7 +4,8 @@ import {
     PhotoIcon,
     GlobeAltIcon,
     DocumentMagnifyingGlassIcon,
-    SpeakerWaveIcon
+    SpeakerWaveIcon,
+    DocumentDuplicateIcon
 } from '@heroicons/react/24/outline'
 import useAuthStore from '../store/useAuthStore';
 import { ROUTES } from '../constants/routes';
@@ -59,6 +60,13 @@ export default function DashboardHero() {
             icon: SpeakerWaveIcon,
             background: 'bg-gray-500',
             href: ROUTES.ANNOUNCEMENTS
+        },
+        {
+            title: 'Blog Oluştur',
+            description: 'Web sitenizde yayınlanacak blogları oluşturun.',
+            icon: DocumentDuplicateIcon,
+            background: 'bg-blue-500',
+            href: ROUTES.BLOGS
         }
 
     ]

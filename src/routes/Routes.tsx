@@ -17,6 +17,8 @@ import Metatags from '../pages/view/Metatags';
 import CreateMetatags from '../pages/create/CreateMetatags';
 import NotFound from '../components/NotFound';
 import CreatePages from '../pages/create/CreatePage';
+import Blogs from '../pages/view/Blog';
+import CreateBlogs from '../pages/create/CreateBlog';
 
 
 const AppRoutes: React.FC = () => {
@@ -103,6 +105,18 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_METATAG} element={
           <ProtectedRoute>
             <CreateMetatags />
+          </ProtectedRoute>
+        }/>
+
+        <Route path={ROUTES.BLOGS} element={
+          <ProtectedRoute>
+            <Blogs />
+          </ProtectedRoute>
+        }/>
+
+        <Route path={ROUTES.CREATE_BLOGS} element={
+          <ProtectedRoute>
+            <CreateBlogs />
           </ProtectedRoute>
         }/>
 

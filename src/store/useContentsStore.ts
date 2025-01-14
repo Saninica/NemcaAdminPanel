@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { PageContentFormData, PageContentStore } from '../types/page';
+import { PageContentStore } from '../types/page';
 import axiosInstance from '../api/axiosInstance';
 
 
@@ -14,8 +14,6 @@ const useContentStore = create<PageContentStore>()(
         
         const fileFormData = new FormData();
         fileFormData.append('cover_image', content.get('cover_image') as File);
-
-        //const url = `content/?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}&page_id=${page_id}&language_code=${language_code}&website_id=${website_id}`;
         
         const res = await axiosInstance.post('content/', content, {
           headers: {

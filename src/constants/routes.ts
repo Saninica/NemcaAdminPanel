@@ -7,6 +7,7 @@ export const ROUTES = {
     WEBSITES: "/websites/",
     ANNOUNCEMENTS: "/announcements/",
     METATAGS: "/metatags/",
+    BLOGS: "/blogs/",
 
     CREATE_LANGUAGE: "/create/language/",
     CREATE_PAGE: "/create/page/",
@@ -14,6 +15,7 @@ export const ROUTES = {
     CREATE_WEBSITE: "/create/website/",
     CREATE_ANNOUNCEMENT: "/create/announcement/",
     CREATE_METATAG: "/create/metatag/",
+    CREATE_BLOGS: "/create/blogs/",
     //RESET_PASS: '/resetpass/:id/:token/',
     //FORGOT_PASS: '/forgot-password',
     //RESET_PASS: '/reset-password/:token',

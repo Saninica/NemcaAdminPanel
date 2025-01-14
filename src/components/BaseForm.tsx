@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { FormField } from '../types/form';
+import TinyMCE from './TinyEditor';
 
 interface BaseFormProps<T extends FieldValues> {
   fields: FormField<T, keyof T>[];
@@ -83,6 +84,8 @@ function BaseFormLayout<T extends FieldValues>({
                           : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
                       } bg-gray-700 text-white`}
                     />
+                  ): field.name == 'body' && submitButtonText.includes('Blog') ? (
+                      <TinyMCE />
                   ) : (
                     <input 
                       id={String(field.name)}
