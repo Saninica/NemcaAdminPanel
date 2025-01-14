@@ -37,6 +37,9 @@ export default function MetatagsForm() {
     reset(); // Reset the form after successful submission
   };
 
+  console.log(error);
+  console.log(loading);
+
   return (
     <BaseFormLayout<MetaTagsBase>
       fields={fields}

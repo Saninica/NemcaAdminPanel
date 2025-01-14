@@ -37,6 +37,9 @@ export default function BlogForm() {
     reset();
   };
 
+  console.log(error);
+  console.log(loading);
+
   return (
     <BaseFormLayout<BlogBase>
       fields={fields}

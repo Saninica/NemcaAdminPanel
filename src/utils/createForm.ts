@@ -17,6 +17,7 @@ export const initializeForm = async (modelName: string) => {
       
       for (const [fieldName, fieldInfo] of Object.entries(modelMetadata)) {
         const { type, nullable, foreign_key } = fieldInfo;
+        console.log(foreign_key);
         
         let inputType: InputType = 'text';
         
@@ -32,6 +33,9 @@ export const initializeForm = async (modelName: string) => {
             break;
           case 'textarea':
             inputType = 'textarea';
+            break;
+          case 'datetime':
+            inputType = 'date';
             break;
           default:
             inputType = 'text';

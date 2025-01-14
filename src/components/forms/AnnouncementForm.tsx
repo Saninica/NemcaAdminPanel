@@ -39,6 +39,9 @@ export default function AnnouncementForm() {
     reset(); // Reset the form after successful submission
   };
 
+  console.log(error);
+  console.log(loading);
+
   return (
     <BaseFormLayout<AnnouncementBase>
       fields={fields}

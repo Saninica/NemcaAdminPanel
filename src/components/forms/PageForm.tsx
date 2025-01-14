@@ -32,6 +32,8 @@ export default function PageForm() {
     };
   };
 
+  console.log(error);
+  console.log(loading);
 
 
   const handleSubmit = async (data: PageBase) => {

@@ -51,6 +51,9 @@ export default function WebsiteForm() {
     reset();
   };
 
+  console.log(error);
+  console.log(loading);
+
   return (
     
     <BaseFormLayout<WebsiteFormData>

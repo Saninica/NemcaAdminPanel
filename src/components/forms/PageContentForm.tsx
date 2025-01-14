@@ -1,5 +1,5 @@
 import BaseFormLayout from '../BaseForm';
-import { PageContentFormData, PageContentSchema } from '../../types/page';
+import { PageContentFormData } from '../../types/page';
 import useContentStore from '../../store/useContentsStore';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
@@ -51,6 +51,9 @@ export default function PageContentForm() {
     await createPageContent(formData);
     reset();
   };
+
+  console.log(error);
+  console.log(loading);
 
   return (
     <BaseFormLayout<PageContentFormData>

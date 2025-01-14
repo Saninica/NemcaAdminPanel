@@ -37,6 +37,9 @@ export default function LanguagesForm() {
     reset(); // Reset the form after successful submission
   };
 
+  console.log(error);
+  console.log(loading);
+
   return (
     <BaseFormLayout<LangSchema>
       fields={fields}

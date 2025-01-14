@@ -86,6 +86,19 @@ function BaseFormLayout<T extends FieldValues>({
                     />
                   ): field.name == 'body' && submitButtonText.includes('Blog') ? (
                       <TinyMCE />
+                  ) : field.name.toString().includes('created') || field.name.toString().includes("date") ? (
+                    <input
+                      id={String(field.name)}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      {...register(field.name as any, { required: field.required })}
+                      className={`block w-full shadow-sm sm:text-sm rounded-md ${
+                        errors[field.name]
+                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                          : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
+                      } bg-gray-700 text-white`}
+                    />
+                      
                   ) : (
                     <input 
                       id={String(field.name)}
