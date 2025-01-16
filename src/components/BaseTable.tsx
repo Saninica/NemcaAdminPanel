@@ -1,9 +1,11 @@
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
+import { ROUTES } from "../constants/routes";
 
 interface BaseTableProps<T extends Record<string, any>> {
   pageName: string;
   data: T[];
   createHref?: string;
+  getEditHref?: (item: T) => string; 
 }
 
 interface Column<T> {
@@ -16,6 +18,7 @@ export default function BaseTable<T extends Record<string, any>>({
   pageName,
   data,
   createHref,
+  getEditHref
 }: BaseTableProps<T>) {
 
   function generateColumns(data: T[]): Column<T>[] {
@@ -88,7 +91,7 @@ export default function BaseTable<T extends Record<string, any>>({
                             </td>
                           ))}
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                            <a href="#" className="text-indigo-400 hover:text-indigo-300">
+                            <a href={getEditHref ? getEditHref(item) : '#'} className="text-indigo-400 hover:text-indigo-300">
                               Edit<span className="sr-only">, {pageName}</span>
                             </a>
                           </td>

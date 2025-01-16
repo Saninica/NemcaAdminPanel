@@ -14,6 +14,7 @@ export interface PageRead extends PageBase {
 export interface PageStore {
     createPage: (lang: PageBase) => Promise<void>;
     getPages: (limit: number, skip: number) => Promise<void>;
+    getPage: (id: number) => Promise<PageRead | undefined>;
     pages: PageBase[] | [];
     pageLoading: boolean;
     pageError: boolean;
@@ -34,6 +35,16 @@ export interface PageContentFormData extends Omit<PageContentSchema, 'cover_imag
 }
 
 
+export interface PageContentRead {
+    id: number;
+    page: string;
+    website: string;
+    language_code: string;
+    title: string;
+    body: string;
+    cover_image: string;
+}
+
 export interface PageContentCreate {
     page_id: number;
     language_code: string;
@@ -42,7 +53,7 @@ export interface PageContentCreate {
 }
 
 export interface PageContentStore {
-    pageContents: PageContentSchema[] | [];
+    pageContents: PageContentRead[] | [];
     pageContentError: boolean;
     pageContentLoading: boolean;
     createPageContent: (content: FormData) => Promise<void>;

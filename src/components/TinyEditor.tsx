@@ -1,33 +1,95 @@
 import { useEffect, useRef, useState } from "react";
 
-
-
 declare global {
-    interface Window {
-      tinymce: any; // Replace `any` with the correct type if needed from TinyMCE types
-    }
+  interface Window {
+    tinymce: any; // Replace `any` with TinyMCE’s type if you have it installed
   }
+}
 
-export default function TinyMCE() {
-  const editorRef = useRef<HTMLTextAreaElement | null>(null); // Reference to the textarea
-  const [content, setContent] = useState<string>(""); // State to hold editor content
+export default function TinyMCE({ nameProp, idProp }: { nameProp: string, idProp: string }) {
+  const editorRef = useRef<HTMLTextAreaElement | null>(null);
+  const [content, setContent] = useState<string>("");
 
   useEffect(() => {
     if (editorRef.current) {
-      // Load the self-hosted TinyMCE script
+      // Dynamically load the TinyMCE script from your self-hosted location
       const script = document.createElement("script");
       script.src = "https://canilgu.dev/tinymce/tinymce.min.js";
       script.onload = () => {
-        // Initialize TinyMCE after the script loads
+        // Initialize TinyMCE after the script has loaded
         window.tinymce.init({
+          // The DOM element to attach TinyMCE to
           target: editorRef.current,
-          plugins: "lists link image table",
-          toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent",
-          setup: (editor: any) => {
-            editor.on("Change", (e: any) => {
-              // Update content state on change
-              console.log(e);
 
+          // Dimensions
+          height: 320,
+          width: 960,
+
+          // Menubar, plugins, toolbar, etc.
+          menubar: "file edit view insert format",
+          plugins:
+            "link image media pageembed template anchor codesample " +
+            "charmap emoticons fullscreen preview save print insertfile " +
+            "ltr rtl  code " +
+            // Below are some from your partial config. Feel free to remove if not needed:
+            "lists checklist forecolor backcolor casechange permanentpen formatpainter pagebreak",
+          toolbar:
+            "undo redo | bold italic underline strikethrough | " +
+            "fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | " +
+            "outdent indent | numlist bullist checklist | forecolor backcolor casechange permanentpen " +
+            "formatpainter removeformat | pagebreak | fullscreen preview save print | " +
+            "insertfile image media pageembed template link anchor codesample | ltr rtl | " +
+            " code",
+
+          // Image uploads
+          images_upload_url: "http://127.0.0.1:8000/admin-api/api/tinyfile/", // FastAPI endpoint
+          automatic_uploads: true,
+          file_picker_types: "image",
+          document_base_url:"http://127.0.0.1:8000/admin-api/",
+
+          // Add your file picker callback
+          file_picker_callback: (callback: any, _value: any, meta: any) => {
+            if (meta.filetype === "image") {
+              const input = document.createElement("input");
+              input.setAttribute("type", "file");
+              input.setAttribute("accept", "image/*");
+
+              input.onchange = function () {
+                const file = (this as HTMLInputElement).files?.[0];
+                if (!file) return;
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                // Post to your FastAPI endpoint
+                fetch("http://127.0.0.1:8000/admin-api/api/tinyfile/", {
+                  method: "POST",
+                  body: formData,
+                  // If you need any headers, set them here
+                  // headers: {
+                  //   'X-CSRFToken': '...',
+                  // },
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    // Assuming your FastAPI returns { location: 'URL-to-file' }
+                    callback(data.location);
+                  })
+                  .catch((error) => {
+                    console.error("Error uploading image:", error);
+                  });
+              };
+              input.click();
+            }
+          },
+
+          // Additional config
+          custom_undo_redo_levels: 10,
+          promotion: false,
+
+          // TinyMCE’s setup callback for reacting to content changes
+          setup: (editor: any) => {
+            editor.on("Change", () => {
               setContent(editor.getContent());
             });
           },
@@ -35,7 +97,7 @@ export default function TinyMCE() {
       };
       document.body.appendChild(script);
 
-      // Cleanup function to remove TinyMCE instance on unmount
+      // Cleanup to remove TinyMCE on unmount
       return () => {
         if (window.tinymce) {
           window.tinymce.remove(editorRef.current);
@@ -49,11 +111,12 @@ export default function TinyMCE() {
       <textarea
         ref={editorRef}
         defaultValue="<p>Initial content here...</p>"
-        id="tiny-editor"
-        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        id={idProp}
+        className="block"
+        name={nameProp}
       />
-      <p>Editor Content:</p>
-      <pre>{content}</pre>
+      <p hidden>Editor Content:</p>
+      <pre hidden>{content}</pre>
     </div>
   );
 }

@@ -19,6 +19,8 @@ import NotFound from '../components/NotFound';
 import CreatePages from '../pages/create/CreatePage';
 import Blogs from '../pages/view/Blog';
 import CreateBlogs from '../pages/create/CreateBlog';
+import UpdatePage from '../pages/update/UpdatePage';
+import UpdateLang from '../pages/update/UpdateLang';
 
 
 const AppRoutes: React.FC = () => {
@@ -48,6 +50,12 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }/>
 
+        <Route path={ROUTES.UPDATE_LANGUAGE} element={
+          <ProtectedRoute>
+            <UpdateLang />
+          </ProtectedRoute>
+        }/>
+
         <Route path={ROUTES.PAGES}  element={
           <ProtectedRoute>
             <Pages />
@@ -57,6 +65,12 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_PAGE} element={
           <ProtectedRoute>
             <CreatePages />
+          </ProtectedRoute>
+        }/>
+
+        <Route path={ROUTES.UPDATE_PAGE} element={
+          <ProtectedRoute>
+            <UpdatePage />
           </ProtectedRoute>
         }/>
 

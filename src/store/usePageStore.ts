@@ -34,6 +34,10 @@ const usePageStore = create<PageStore>()(
           console.error("Error  on get pages:", error);
           set({ pageError: true, pageLoading: false });
         }
+      },
+      getPage: async (id: number): Promise<PageBase | undefined> => {
+        await get().getPages(15, 0);
+        return get().pages.find((page) => page.id === id);
       }
     }),
   

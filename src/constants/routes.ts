@@ -16,6 +16,9 @@ export const ROUTES = {
     CREATE_ANNOUNCEMENT: "/create/announcement/",
     CREATE_METATAG: "/create/metatag/",
     CREATE_BLOGS: "/create/blogs/",
+
+    UPDATE_LANGUAGE: "/update/language/:code/:webid/",
+    UPDATE_PAGE: "/update/page/:id/",
     //RESET_PASS: '/resetpass/:id/:token/',
     //FORGOT_PASS: '/forgot-password',
     //RESET_PASS: '/reset-password/:token',

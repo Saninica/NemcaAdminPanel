@@ -1,9 +1,11 @@
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { FormField } from '../types/form';
 import TinyMCE from './TinyEditor';
+import { useEffect } from 'react';
 
 interface BaseFormProps<T extends FieldValues> {
   fields: FormField<T, keyof T>[];
+  fieldValues?: T;
   onSubmit: SubmitHandler<T>;
   submitButtonText: string;
 }
@@ -12,50 +14,53 @@ function BaseFormLayout<T extends FieldValues>({
   fields,
   onSubmit,
   submitButtonText,
-  
+  fieldValues
 }: BaseFormProps<T>) {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<T>();
 
+  useEffect(() => {
+    if (fieldValues) {
+      reset(fieldValues); // Update form with new field values
+    }
+  }, [fieldValues, reset]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 divide-y" encType="multipart/form-data">
-      <div className="space-y-8 divide-y ">
-        {/* Form Section */}
-        <div className="pt-8">
+    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+      <div className='space-y-12'>
+        <div className="border-b border-gray-900/10 pb-12 ">
+
           <h3 className="text-lg leading-6 font-medium text-white ">Form</h3>
           <p className="mt-1 text-sm text-gray-400">
             Please fill out the form below to create a new entry.
           </p>
 
-          <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6 ">
+          <div className="mt-10 grid grid-cols-1 gap-x-3 gap-y-12 sm:grid-cols-6 ">
             {fields.map((field) => (
               <div
                 key={String(field.name)}
-                className={`sm:col-span-${
-                  field.type === 'textarea' || field.type === 'select' ? 6 : 3
-                }`}
-              >
+                className={`col-span-full`}>
                 <label
                   htmlFor={String(field.name)}
                   className="block text-sm font-medium text-white"
                 >
                   {field.label}
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 col-span-full">
                   {field.type === 'select' && field.options ? (
                     <select
                       id={String(field.name)}
                       {...register(field.name as any, { required: field.required })}
-                      className={`block w-full shadow-sm sm:text-sm rounded-md ${
-                        errors[field.name]
+                      className={`block w-full shadow-sm sm:text-sm rounded-md ${errors[field.name]
                           ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                           : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-                      } bg-gray-700 text-white`}
+                        } bg-gray-700 text-white`}
                     >
-                      <option value="">Select {field.label}</option>
+                      <option>Select {field.label}</option>
                       {field.options.map((option) => (
                         <option key={option.value} value={option.value}>
                           {option.label}
@@ -67,50 +72,55 @@ function BaseFormLayout<T extends FieldValues>({
                       id={String(field.name)}
                       placeholder={field.placeholder}
                       {...register(field.name as any, { required: field.required })}
-                      className={`block w-full shadow-sm sm:text-sm rounded-md ${
-                        errors[field.name]
+                      className={`block w-full shadow-sm sm:text-sm rounded-md ${errors[field.name]
                           ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                           : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-                      } bg-gray-700 text-white`}
+                        } bg-gray-700 text-white`}
                     />
                   ) : field.type === 'img' ? (
-                    <input
-                      id={String(field.name)}
-                      type="file"
-                      {...register(field.name as any, { required: field.required })}
-                      className={`block w-full shadow-sm sm:text-sm rounded-md ${
-                        errors[field.name]
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-                      } bg-gray-700 text-white`}
-                    />
-                  ): field.name == 'body' && submitButtonText.includes('Blog') ? (
-                      <TinyMCE />
+                    <div className='col-span-full'>
+                      <input
+                        id={String(field.name)}
+                        type="file"
+                        {...register(field.name as any, { required: field.required })}
+                        className={`block w-full shadow-sm sm:text-sm rounded-md ${errors[field.name]
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
+                          } bg-gray-700 text-white`}
+                      />
+                    </div>
                   ) : field.name.toString().includes('created') || field.name.toString().includes("date") ? (
-                    <input
-                      id={String(field.name)}
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      {...register(field.name as any, { required: field.required })}
-                      className={`block w-full shadow-sm sm:text-sm rounded-md ${
-                        errors[field.name]
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-                      } bg-gray-700 text-white`}
-                    />
-                      
+                    <div className='col-span-full'>
+                      <input
+                        id={String(field.name)}
+                        type={field.type}
+                        
+                        placeholder={field.placeholder}
+                        {...register(field.name as any, { required: field.required })}
+                        className={`block w-full shadow-sm sm:text-sm rounded-md ${errors[field.name]
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
+                          } bg-gray-700 text-white`}
+                      />
+                    </div>
+
+                  ) : field.name == 'body' && submitButtonText.includes('Blog') ? (
+                    <div className='col-span-full mb-14'>
+                      <TinyMCE nameProp={field.name} idProp={String(field.name)}/>
+                    </div>
                   ) : (
-                    <input 
-                      id={String(field.name)}
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      {...register(field.name as any, { required: field.required })}
-                      className={`block w-full h-12 shadow-sm sm:text-sm rounded-md ${
-                        errors[field.name]
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-                      } bg-gray-700 text-white`}
-                    />
+                    <div className='col-span-full'>
+                      <input
+                        id={String(field.name)}
+                        type={field.type}
+                        placeholder={ field.name == 'page_id' ? 'ID Değerleri Sayfalar Kısmında görülebilir.' : field.placeholder}
+                        {...register(field.name as any, { required: field.required })}
+                        className={`block w-full h-12 shadow-sm sm:text-sm rounded-md ${errors[field.name]
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
+                          } bg-gray-700 text-white`}
+                      />
+                    </div>
                   )}
                 </div>
                 {errors[field.name] && (

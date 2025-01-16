@@ -40,14 +40,23 @@ export default function PageContentForm() {
     formData.append('title', data.title);
     formData.append('body', data.body);
 
-    formData.append('cover_image', data.cover_image[0]);
+    if (data.cover_image){
+      formData.append('cover_image', data.cover_image[0]);
+    }
+
+
     formData.append('page_id', data.page_id.toString());
     formData.append('language_code', data.language_code);
     formData.append('website_id', data.website_id.toString());
     
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
+
+      if (key == 'cover_image'  && !(value instanceof File)) {
+        formData.delete(key);
+      }
     }
+    
     await createPageContent(formData);
     reset();
   };

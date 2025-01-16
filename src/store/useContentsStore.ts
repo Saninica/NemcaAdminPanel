@@ -13,7 +13,17 @@ const useContentStore = create<PageContentStore>()(
         set({  pageContentLoading: true });
         
         const fileFormData = new FormData();
-        fileFormData.append('cover_image', content.get('cover_image') as File);
+
+        if (content.get('cover_image')) {
+          const coverImage = content.get('cover_image');
+          if (coverImage && coverImage instanceof Blob) {
+            fileFormData.append('cover_image', coverImage);
+          } else {
+            content.delete('cover_image');
+          }
+        } 
+
+
         
         const res = await axiosInstance.post('content/', content, {
           headers: {
