@@ -1,7 +1,6 @@
 import BaseFormLayout from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useMetatagsStore from '../../store/useMetatags';
 import { MetaTagsBase } from '../../types/metatags';
@@ -14,7 +13,6 @@ export default function MetatagsForm() {
   const [error, setError] = useState<string | null>(null);
   
   const { createMetaTags } = useMetatagsStore();
-  const { reset } = useForm<MetaTagsBase>();
 
   useEffect(() => {
     initializeMetatagForm('MetaTag');
@@ -35,12 +33,11 @@ export default function MetatagsForm() {
 
   const handleSubmit = async (data: MetaTagsBase) => {
     await createMetaTags(data);
-    reset(); // Reset the form after successful submission
     toast.success('Metatag created successfully');
   };
 
-  console.log(error);
-  console.log(loading);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <BaseFormLayout<MetaTagsBase>

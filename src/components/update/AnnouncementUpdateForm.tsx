@@ -41,6 +41,8 @@ export default function AnnouncementUpdateForm({ announcementId }: {  announceme
       if(page_content !== undefined) {
         console.log(page_content);
         if (page_content.cover_image) page_content.cover_image = "http://127.0.0.1:8000/admin-api/" + page_content.cover_image;
+        page_content.start_date = page_content.start_date.toString().split('T')[0];
+        page_content.end_date = page_content.end_date.toString().split('T')[0];
         setFieldValues(page_content);
       }
     }

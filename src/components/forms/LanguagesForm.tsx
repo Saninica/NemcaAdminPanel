@@ -1,10 +1,10 @@
 import BaseFormLayout from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { LangSchema } from '../../types/lang';
 import useLangStore from '../../store/useLangStore';
 import { initializeForm } from '../../utils/createForm';
+import { toast } from 'react-toastify';
 
 
 export default function LanguagesForm() {
@@ -13,7 +13,6 @@ export default function LanguagesForm() {
   const [error, setError] = useState<string | null>(null);
   
   const { createLang } = useLangStore();
-  const { reset } = useForm<LangSchema>();
 
   useEffect(() => {
     initializeLanguageForm('Language');
@@ -34,11 +33,11 @@ export default function LanguagesForm() {
 
   const handleSubmit = async (data: LangSchema) => {
     await createLang(data);
-    reset(); // Reset the form after successful submission
+    toast.success('Language created successfully');
   };
 
-  console.log(error);
-  console.log(loading);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <BaseFormLayout<LangSchema>

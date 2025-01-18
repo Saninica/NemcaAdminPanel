@@ -2,9 +2,9 @@ import BaseFormLayout from '../BaseForm';
 import { PageBase } from '../../types/page';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import usePageStore from '../../store/usePageStore';
+import { toast } from 'react-toastify';
 
 
 export default function PageForm() {
@@ -13,7 +13,6 @@ export default function PageForm() {
   const [error, setError] = useState<string | null>(null);
 
   const { createPage } = usePageStore();
-  const { reset } = useForm<PageBase>();
 
   useEffect(() => {
     initializePageForm('Page');
@@ -32,15 +31,15 @@ export default function PageForm() {
     };
   };
 
-  console.log(error);
-  console.log(loading);
-
 
   const handleSubmit = async (data: PageBase) => {
     await createPage(data);
-    reset(); // Reset the form after successful submission
+    toast.success('Page created successfully');
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+  
   return (
     <BaseFormLayout<PageBase>
       fields={fields}

@@ -3,8 +3,8 @@ import { PageContentFormData } from '../../types/page';
 import useContentStore from '../../store/useContentsStore';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
+import { toast } from 'react-toastify';
 
 
 export default function PageContentForm() {
@@ -13,7 +13,6 @@ export default function PageContentForm() {
   const [error, setError] = useState<string | null>(null);
 
   const { createPageContent } = useContentStore();
-  const { reset } = useForm<PageContentFormData>();
 
   useEffect(() => {
     initializePageContentForm('PageContent');
@@ -58,11 +57,11 @@ export default function PageContentForm() {
     }
     
     await createPageContent(formData);
-    reset();
+    toast.success('Page content created successfully');
   };
 
-  console.log(error);
-  console.log(loading);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <BaseFormLayout<PageContentFormData>

@@ -1,10 +1,9 @@
 import BaseFormLayout from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useWebsite from '../../store/useWebsite';
-import { WebsiteBase, WebsiteFormData } from '../../types/website';
+import { WebsiteFormData } from '../../types/website';
 import { toast } from 'react-toastify';
 
 
@@ -14,7 +13,6 @@ export default function WebsiteForm() {
   const [error, setError] = useState<string | null>(null);
 
   const { createWebsite } = useWebsite();
-  const { reset } = useForm<WebsiteBase>();
 
   useEffect(() => {
     initializeWebsiteForm('Website');
@@ -48,15 +46,13 @@ export default function WebsiteForm() {
     }
 
     await createWebsite(formData);
-    reset();
     toast.success('Website created successfully');
   };
 
-  console.log(error);
-  console.log(loading);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    
     <BaseFormLayout<WebsiteFormData>
       fields={fields}
       onSubmit={handleSubmit}

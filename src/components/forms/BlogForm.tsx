@@ -1,10 +1,10 @@
 import BaseFormLayout from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useBlogStore from '../../store/useBlogStore';
 import { BlogBase } from '../../types/blog';
+import { toast } from 'react-toastify';
 
 
 export default function BlogForm() {
@@ -13,7 +13,6 @@ export default function BlogForm() {
   const [error, setError] = useState<string | null>(null);
   
   const { createBlog } = useBlogStore();
-  const { reset } = useForm<BlogBase>();
 
   useEffect(() => {
     initializeLanguageForm('Blog');
@@ -34,11 +33,11 @@ export default function BlogForm() {
 
   const handleSubmit = async (data: BlogBase) => {
     await createBlog(data);
-    reset();
+    toast.success('Blog created successfully');
   };
 
-  console.log(error);
-  console.log(loading);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <BaseFormLayout<BlogBase>

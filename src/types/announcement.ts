@@ -3,8 +3,8 @@ export interface AnnouncementBase {
     title: string;
     body: string;
     cover_image: string;
-    start_date: Date;
-    end_date: Date;
+    start_date: string;
+    end_date: string;
     page_id: number;
     website_id: number;
     language_code: string;

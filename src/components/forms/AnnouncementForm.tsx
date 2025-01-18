@@ -1,10 +1,9 @@
 import BaseFormLayout from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useAnnouncement from '../../store/useAnnouncement';
-import { AnnouncementBase, AnnouncementFormData } from '../../types/announcement';
+import {  AnnouncementFormData } from '../../types/announcement';
 import { toast } from 'react-toastify';
 
 
@@ -14,7 +13,6 @@ export default function AnnouncementForm() {
   const [error, setError] = useState<string | null>(null);
 
   const { createAnnouncement } = useAnnouncement();
-  const { reset } = useForm<AnnouncementBase>();
 
   useEffect(() => {
     initializeAnnouncementForm('Announcement');
@@ -61,7 +59,6 @@ export default function AnnouncementForm() {
     }
 
     await createAnnouncement(formData);
-    reset(); // Reset the form after successful submission
     toast.success('Announcement created successfully');
   };
 
