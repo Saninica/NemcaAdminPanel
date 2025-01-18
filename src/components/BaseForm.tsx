@@ -83,11 +83,22 @@ function BaseFormLayout<T extends FieldValues>({
                         id={String(field.name)}
                         type="file"
                         {...register(field.name as any, { required: field.required })}
-                        className={`block w-full shadow-sm sm:text-sm rounded-md ${errors[field.name]
+                        className={`block w-full mb-8 shadow-sm sm:text-sm rounded-md ${errors[field.name]
                             ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
                             : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
                           } bg-gray-700 text-white`}
                       />
+                      {fieldValues && fieldValues[field.name as keyof T] && (
+                        <label htmlFor={String(field.name)} className="text-white mt-8"> Current Image </label>
+                      )}
+                      {fieldValues && fieldValues[field.name as keyof T] && (
+                        
+                        <img
+                          src={fieldValues[field.name as keyof T] as string}
+                          alt="cover_image"
+                          className="h-40 w-96 mt-2"
+                        />
+                      )}
                     </div>
                   ) : field.name.toString().includes('created') || field.name.toString().includes("date") ? (
                     <div className='col-span-full'>

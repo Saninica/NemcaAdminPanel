@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useAnnouncement from '../../store/useAnnouncement';
-import { AnnouncementBase } from '../../types/announcement';
+import { AnnouncementBase, AnnouncementFormData } from '../../types/announcement';
+import { toast } from 'react-toastify';
 
 
 export default function AnnouncementForm() {
@@ -34,16 +35,42 @@ export default function AnnouncementForm() {
 
 
 
-  const handleSubmit = async (data: AnnouncementBase) => {
-    await createAnnouncement(data);
+  const handleSubmit = async (data: AnnouncementFormData) => {
+    const formData = new FormData();
+
+    formData.append('title', data.title);
+    formData.append('body', data.body);
+
+    formData.append('page_id', data.page_id.toString());
+    formData.append('website_id', data.website_id.toString());
+    formData.append('language_code', data.language_code);
+
+    formData.append('start_date', data.start_date.toString());
+    formData.append('end_date', data.end_date.toString());
+
+    if (data.cover_image){
+      formData.append('cover_image', data.cover_image[0]);
+    }
+
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+
+      if (key == 'cover_image'  && !(value instanceof File)) {
+        formData.delete(key);
+      }
+    }
+
+    await createAnnouncement(formData);
     reset(); // Reset the form after successful submission
+    toast.success('Announcement created successfully');
   };
 
-  console.log(error);
-  console.log(loading);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+
 
   return (
-    <BaseFormLayout<AnnouncementBase>
+    <BaseFormLayout<AnnouncementFormData>
       fields={fields}
       onSubmit={handleSubmit}
       submitButtonText="Create Announcement"

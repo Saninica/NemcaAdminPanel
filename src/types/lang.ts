@@ -8,7 +8,10 @@ export interface LanguageBase {
 export interface LangStore  {
   createLang: (lang: LanguageBase) => Promise<void>;
   getLangs: (limit: number, skip: number) => Promise<void>;
+  getLang: (langcode: string, website_id: number) => Promise<LanguageBase | undefined>;
+  updateLang: (lang: LanguageBase, lang_code: string, website_id: number) => Promise<boolean>;
   langs: LanguageBase[] | [];
+  lang: LanguageBase | undefined;
   langLoading: boolean;
   langError: boolean;
 }

@@ -1,10 +1,12 @@
 import { ToastContainer } from 'react-toastify';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
-import PageForm from '../../components/forms/PageForm';
+import { useParams } from 'react-router-dom';
+import UpdateMetatagForm from '../../components/update/MetatagUpdateForm';
 
+export default function UpdateMetatag() {
+    const { id } = useParams<{ id: string }>(); // Get the id from the URL
 
-export default function CreatePages() {
 
     return (
         <div className="container mx-auto p-4  min-h-screen">
@@ -12,11 +14,12 @@ export default function CreatePages() {
                 <button className='px-8' onClick={() => { history.back() }}>                 
                     <ArrowLeftCircleIcon className="h-6 w-6 inline-block ml-2" />
                 </button>
-                Create Page
+                Update Metatag
             </h1>
 
-            <PageForm />
-
+            
+            <UpdateMetatagForm metatagId={Number(id)} />
+           
             <ToastContainer />
         </div>
     );

@@ -23,7 +23,8 @@ const Metatags: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName = 'Metatags' data={metaTags} createHref={ROUTES.CREATE_METATAG} />
+        <BaseTable pageName = 'Metatags' data={metaTags} createHref={ROUTES.CREATE_METATAG} 
+         getEditHref={(item) => ROUTES.UPDATE_METATAG.replace(':id', String(item.id))} />
 
       </main>
 

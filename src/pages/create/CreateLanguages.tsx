@@ -5,7 +5,6 @@ import LanguagesForm from '../../components/forms/LanguagesForm';
 import useLangStore from '../../store/useLangStore';
 
 export default function CreateLanguages() {
-    const { langLoading, langError } = useLangStore();
 
     return (
         <div className="container mx-auto p-4  min-h-screen">
@@ -16,8 +15,7 @@ export default function CreateLanguages() {
                 Create Language
             </h1>
             <LanguagesForm />
-            {langLoading ? <p className="text-gray-400">Creating language...</p> : null}
-            {langError && <p className="text-red-500">Error creating language content.</p>}
+            
             <ToastContainer />
         </div>
     );

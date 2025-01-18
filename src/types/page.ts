@@ -1,10 +1,16 @@
 export interface PageBase {
     id: number;
     name: string;
+    website_id: number;
 }
 
 export interface PageCreate {
     name: string;
+}
+
+export interface PageUpdate {
+    name: string;
+    website_id: number;
 }
 
 export interface PageRead extends PageBase {
@@ -12,10 +18,12 @@ export interface PageRead extends PageBase {
 }
 
 export interface PageStore {
-    createPage: (lang: PageBase) => Promise<void>;
+    createPage: (page: PageBase) => Promise<void>;
     getPages: (limit: number, skip: number) => Promise<void>;
-    getPage: (id: number) => Promise<PageRead | undefined>;
+    getPage: (id: number) => Promise<PageBase | undefined>;
+    updatePage: (id: number, data: PageUpdate) => Promise<boolean>;
     pages: PageBase[] | [];
+    page: PageBase | undefined;
     pageLoading: boolean;
     pageError: boolean;
 }
@@ -34,6 +42,14 @@ export interface PageContentFormData extends Omit<PageContentSchema, 'cover_imag
     cover_image: FileList;
 }
 
+export interface PageContentUpdateFormData {
+    cover_image: FileList;
+    page_id: number;
+    website_id: number;
+    language_code: string;
+    title: string;
+    body: string;
+}
 
 export interface PageContentRead {
     id: number;
@@ -54,8 +70,11 @@ export interface PageContentCreate {
 
 export interface PageContentStore {
     pageContents: PageContentRead[] | [];
+    pageContent: PageContentRead | undefined;
     pageContentError: boolean;
     pageContentLoading: boolean;
+    getPageContent: (id: number) => Promise<PageContentRead | undefined>;
+    updatePageContent: (id: number, content: FormData) => Promise<boolean>;
     createPageContent: (content: FormData) => Promise<void>;
     getPageContents: (limit: number, skip: number) => Promise<void>;
 }

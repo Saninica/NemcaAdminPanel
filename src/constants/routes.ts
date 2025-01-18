@@ -19,6 +19,10 @@ export const ROUTES = {
 
     UPDATE_LANGUAGE: "/update/language/:code/:webid/",
     UPDATE_PAGE: "/update/page/:id/",
+    UPDATE_CONTENT: "/update/content/:id/",
+    UPDATE_WEBSITE: "/update/website/:id/",
+    UPDATE_ANNOUNCEMENT: "/update/announcement/:id/",
+    UPDATE_METATAG: "/update/metatag/:id/",
     //RESET_PASS: '/resetpass/:id/:token/',
     //FORGOT_PASS: '/forgot-password',
     //RESET_PASS: '/reset-password/:token',

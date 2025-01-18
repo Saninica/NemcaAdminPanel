@@ -1,9 +1,10 @@
 import BaseFormLayout from '../BaseForm';
-import { PageBase } from '../../types/page';
+import { PageBase, PageUpdate } from '../../types/page';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
 import usePageStore from '../../store/usePageStore';
+import { toast } from 'react-toastify';
 
 
 export default function UpdatePageForm({ pageId }: { pageId: number }) {
@@ -12,58 +13,62 @@ export default function UpdatePageForm({ pageId }: { pageId: number }) {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const {  getPage } = usePageStore();
+  const {  getPage, updatePage } = usePageStore();
 
   useEffect(() => {
-    initializePageForm('Page');
+    let isMounted = true;
+  
+    const fetchData = async () => {
+      if (isMounted) {
+        await initializePageForm('Page');
+      }
+    };
+  
+    fetchData();
+  
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const initializePageForm = async (modelName: string) => {
     setLoading(true);
-    let fieldValues;
     try {
+      const page = await getPage(pageId);
       const data = await initializeForm(modelName);
-       fieldValues = await getPage(pageId);
       setLoading(false);
       setFields(data || []);
-      setFieldValues(fieldValues || {});
-
+      
+      if(page !== undefined) {
+        const { id, ...rest } = page; // Remove id if necessary
+        setFieldValues(rest);
+      }
     }
     catch (err: any) {
       setError(err.message || 'Error fetching page form.');
       setLoading(false);
     };
 
-
-
-    if (fieldValues && 'id' in fieldValues) {
-      delete fieldValues.id; // Remove id from field values
-    }
-
-    
-    console.log(fieldValues);
-    console.log("^^^^^^^^^^^^^^^^^^")
-    //reset(fieldValues || {}); // Update form default values dynamically
-
   };
-
-  console.log(error);
-  console.log(loading);
 
   
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
-  const handleSubmit = async (data: PageBase) => {
-    console.log(data);
-    //reset(); // Reset the form after successful submission
+  const handleUpdateSubmit = async (data: PageUpdate) => {
+    const result = await updatePage(pageId, data);
+    if (result) {
+      toast.error('Error updating page');
+    } else {
+      toast.success('Page updated successfully');
+    }
   };
 
   return (
     <BaseFormLayout<PageBase>
       fields={fields}
       fieldValues={fieldValues}
-      onSubmit={handleSubmit}
+      onSubmit={handleUpdateSubmit}
       submitButtonText="Update Page"
     />
   );

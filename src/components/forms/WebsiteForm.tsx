@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useWebsite from '../../store/useWebsite';
 import { WebsiteBase, WebsiteFormData } from '../../types/website';
+import { toast } from 'react-toastify';
 
 
 export default function WebsiteForm() {
@@ -42,13 +43,13 @@ export default function WebsiteForm() {
 
     formData.append('favicon_image', data.favicon_image[0]);
     
-    // To see the actual contents of formData:
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
 
     await createWebsite(formData);
     reset();
+    toast.success('Website created successfully');
   };
 
   console.log(error);

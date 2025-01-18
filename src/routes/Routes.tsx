@@ -21,6 +21,10 @@ import Blogs from '../pages/view/Blog';
 import CreateBlogs from '../pages/create/CreateBlog';
 import UpdatePage from '../pages/update/UpdatePage';
 import UpdateLang from '../pages/update/UpdateLang';
+import UpdateWebsite from '../pages/update/UpdateWebsite';
+import UpdateMetatag from '../pages/update/UpdateMetatags';
+import UpdatePageContent from '../pages/update/UpdateContent';
+import UpdateAnnouncement from '../pages/update/UpdateAnnouncement';
 
 
 const AppRoutes: React.FC = () => {
@@ -86,6 +90,12 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }/>
 
+        <Route path={ROUTES.UPDATE_CONTENT} element={
+          <ProtectedRoute>
+            <UpdatePageContent />
+          </ProtectedRoute>
+        }/>
+
         <Route path={ROUTES.ANNOUNCEMENTS} element={
           <ProtectedRoute>
             <Announcement />
@@ -95,6 +105,12 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_ANNOUNCEMENT} element={
           <ProtectedRoute>
             <CreateAnnouncement />
+          </ProtectedRoute>
+        }/>
+
+        <Route path={ROUTES.UPDATE_ANNOUNCEMENT} element={
+          <ProtectedRoute>
+            <UpdateAnnouncement />
           </ProtectedRoute>
         }/>
 
@@ -110,6 +126,12 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }/>
 
+        <Route path={ROUTES.UPDATE_WEBSITE} element={
+          <ProtectedRoute>
+            <UpdateWebsite />
+          </ProtectedRoute>
+        }/>
+
         <Route path={ROUTES.METATAGS} element={
           <ProtectedRoute>
             <Metatags />
@@ -119,6 +141,12 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_METATAG} element={
           <ProtectedRoute>
             <CreateMetatags />
+          </ProtectedRoute>
+        }/>
+
+        <Route path={ROUTES.UPDATE_METATAG} element={
+          <ProtectedRoute>
+            <UpdateMetatag />
           </ProtectedRoute>
         }/>
 

@@ -1,11 +1,12 @@
 import { create } from 'zustand';
-import { PageBase, PageStore } from '../types/page';
+import { PageBase, PageStore, PageUpdate } from '../types/page';
 import axiosInstance from '../api/axiosInstance';
 
 
 const usePageStore = create<PageStore>()(
     (set, get) => ({
       pages: [],
+      page: undefined,
       pageError: false,
       pageLoading: false,
 
@@ -35,10 +36,38 @@ const usePageStore = create<PageStore>()(
           set({ pageError: true, pageLoading: false });
         }
       },
-      getPage: async (id: number): Promise<PageBase | undefined> => {
-        await get().getPages(15, 0);
-        return get().pages.find((page) => page.id === id);
-      }
+      getPage: async (id: number): Promise<PageBase |undefined> => {
+        set({ pageLoading: true });
+        try {
+          const response = await axiosInstance.get(`page/${id}/`);
+          
+          if (response.status === 200) {
+            return response.data;
+          }
+
+        } catch (error) {
+          console.error("Error  on get page:", error);
+          set({ pageError: true, pageLoading: false });
+        }
+      },
+      updatePage: async (id: number, data: PageUpdate): Promise<boolean> => {
+        set({ pageLoading: true });
+        try {
+          const response = await axiosInstance.put(`page/${id}/`, data);
+          
+          if (response.status === 200) {
+            set({ pageLoading: false });
+          } else {
+            set({ pageError: true, pageLoading: false });
+          }
+
+        } catch (error) {
+          console.error("Error  on update page:", error);
+          set({ pageError: true, pageLoading: false });
+        }
+
+        return get().pageError;
+      },
     }),
   
 );

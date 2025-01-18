@@ -1,11 +1,9 @@
 import { ToastContainer } from 'react-toastify';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
-import useBlogStore from '../../store/useBlogStore';
 import BlogForm from '../../components/forms/BlogForm';
 
 export default function CreateBlogs() {
-    const { blogsLoading, blogsError } = useBlogStore();
 
     return (
         <div className="container mx-auto p-4  min-h-screen">
@@ -15,9 +13,9 @@ export default function CreateBlogs() {
                 </button>
                 Create Blogs
             </h1>
+            
             <BlogForm />
-            {blogsLoading ? <p className="text-gray-400">Creating blog...</p> : null}
-            {blogsError && <p className="text-red-500">Error creating blog content.</p>}
+
             <ToastContainer />
         </div>
     );

@@ -1,10 +1,13 @@
 import { ToastContainer } from 'react-toastify';
 import { ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import 'react-toastify/dist/ReactToastify.css';
-import PageForm from '../../components/forms/PageForm';
+import { useParams } from 'react-router-dom';
+import ContentUpdateForm from '../../components/update/ContentUpdateForm';
 
 
-export default function CreatePages() {
+export default function UpdatePageContent() {
+    const { id } = useParams<{ id: string }>();
+
 
     return (
         <div className="container mx-auto p-4  min-h-screen">
@@ -12,11 +15,12 @@ export default function CreatePages() {
                 <button className='px-8' onClick={() => { history.back() }}>                 
                     <ArrowLeftCircleIcon className="h-6 w-6 inline-block ml-2" />
                 </button>
-                Create Page
+                Update Page Content
             </h1>
 
-            <PageForm />
-
+            
+            <ContentUpdateForm contentId={Number(id)} />
+           
             <ToastContainer />
         </div>
     );

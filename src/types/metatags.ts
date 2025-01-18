@@ -10,6 +10,9 @@ export interface MetaTagsBase {
 export interface MetaTagsStore {
     createMetaTags: (metaTags: MetaTagsBase) => Promise<void>;
     getMetaTags: (limit: number, skip: number) => Promise<void>;
+    getMetatag: (id: number) => Promise<MetaTagsBase | undefined>;
+    updateMetatag: (id: number, metaTags: MetaTagsBase) => Promise<boolean>;
+    metaTag: MetaTagsBase | undefined;
     metaTags: MetaTagsBase[] | [];
     metaTagsLoading: boolean;
     metaTagsError: boolean;

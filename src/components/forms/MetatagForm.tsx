@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { initializeForm } from '../../utils/createForm';
 import useMetatagsStore from '../../store/useMetatags';
 import { MetaTagsBase } from '../../types/metatags';
+import { toast } from 'react-toastify';
 
 
 export default function MetatagsForm() {
@@ -35,6 +36,7 @@ export default function MetatagsForm() {
   const handleSubmit = async (data: MetaTagsBase) => {
     await createMetaTags(data);
     reset(); // Reset the form after successful submission
+    toast.success('Metatag created successfully');
   };
 
   console.log(error);

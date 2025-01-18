@@ -5,8 +5,7 @@ export const initializeForm = async (modelName: string) => {
 
     try {
       const metadata: ModelMetadataResponse = await fetchModelMetadata();
-      console.log(metadata);
-      console.log("^^^^^^^^^^^^")
+    
       const modelMetadata = metadata.models[modelName];
 
       if (!modelMetadata) {
@@ -16,8 +15,7 @@ export const initializeForm = async (modelName: string) => {
       const dynamicFields: FormField<any, any>[] = [];
       
       for (const [fieldName, fieldInfo] of Object.entries(modelMetadata)) {
-        const { type, nullable, foreign_key } = fieldInfo;
-        console.log(foreign_key);
+        const { type, nullable } = fieldInfo;
         
         let inputType: InputType = 'text';
         
