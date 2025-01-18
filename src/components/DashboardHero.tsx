@@ -79,7 +79,7 @@ export default function DashboardHero() {
         <div>
             <h2 className="text-base font-semibold text-white">Hoş Geldiniz, {user?.username}</h2>
             <p className="mt-1 text-sm text-gray-50">
-                Aşağıda sahip olduğunuz websiteleri listelenmektedir. Websitesini seçerek içeriklerini düzenleyebilirsiniz.
+                Aşağıda bulunan seçenekleri kullanarak websitenize dil, sayfa, içerik, metatag, duyuru ve blog oluşturabilirsiniz.
             </p>
             <ul role="list" className="mt-6 grid grid-cols-1 gap-6 border-b border-t border-gray-200 py-6 sm:grid-cols-2">
                 {items.map((item, itemIdx) => (

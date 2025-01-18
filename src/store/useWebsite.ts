@@ -102,6 +102,23 @@ const useWebsite = create<WebsiteStore>()(
             }
 
         },
+        deleteWebsite: async (id: number): Promise<boolean> => {
+            set({ websiteLoading: true });
+            try {
+                const res = await axiosInstance.delete(`website/${id}/`);
+                if (res.status === 200) {
+                    set({ websiteError: false, websiteLoading: false });
+                    return true;
+                } else {
+                    set({ websiteError: true, websiteLoading: false });
+                    return false;
+                }
+            } catch (error) {
+                console.error("Error deleting website:", error);
+                set({ websiteError: true, websiteLoading: false });
+                return false;
+            }
+        }
     })
 )
 

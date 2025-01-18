@@ -22,6 +22,7 @@ export interface PageStore {
     getPages: (limit: number, skip: number) => Promise<void>;
     getPage: (id: number) => Promise<PageBase | undefined>;
     updatePage: (id: number, data: PageUpdate) => Promise<boolean>;
+    deletePage: (id: number) => Promise<boolean>;
     pages: PageBase[] | [];
     page: PageBase | undefined;
     pageLoading: boolean;
@@ -77,4 +78,5 @@ export interface PageContentStore {
     updatePageContent: (id: number, content: FormData) => Promise<boolean>;
     createPageContent: (content: FormData) => Promise<void>;
     getPageContents: (limit: number, skip: number) => Promise<void>;
+    deleteContent: (id: number) => Promise<boolean>;
 }

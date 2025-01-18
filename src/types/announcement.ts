@@ -27,6 +27,7 @@ export interface AnnouncementStore {
     announcement: AnnouncementBase | undefined;
     getAnnouncement: (id: number) => Promise<AnnouncementBase | undefined>;
     updateAnnouncement: (id: number, announcement: FormData) => Promise<boolean>;
+    deleteAnnouncement: (id: number) => Promise<boolean>;
     announcementsLoading: boolean;
     announcementsError: boolean;
 }

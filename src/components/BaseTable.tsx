@@ -1,11 +1,12 @@
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
-import { ROUTES } from "../constants/routes";
+
 
 interface BaseTableProps<T extends Record<string, any>> {
   pageName: string;
   data: T[];
   createHref?: string;
   getEditHref?: (item: T) => string; 
+  deleteSubmit?: (id: number) => Promise<void>;
 }
 
 interface Column<T> {
@@ -18,7 +19,8 @@ export default function BaseTable<T extends Record<string, any>>({
   pageName,
   data,
   createHref,
-  getEditHref
+  getEditHref,
+  deleteSubmit
 }: BaseTableProps<T>) {
 
   function generateColumns(data: T[]): Column<T>[] {
@@ -74,9 +76,7 @@ export default function BaseTable<T extends Record<string, any>>({
                             {column.header}
                           </th>
                         ))}
-                        <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                          <span className="sr-only">Edit</span>
-                        </th>
+                      
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-800">
@@ -94,6 +94,10 @@ export default function BaseTable<T extends Record<string, any>>({
                             <a href={getEditHref ? getEditHref(item) : '#'} className="text-indigo-400 hover:text-indigo-300">
                               Edit<span className="sr-only">, {pageName}</span>
                             </a>
+
+                            <button onClick={() => deleteSubmit && deleteSubmit(item.id)} className="text-red-400 ml-4 hover:text-red-300">
+                              Delete<span className="sr-only">, {pageName}</span>
+                            </button>
                           </td>
                         </tr>
                       ))}

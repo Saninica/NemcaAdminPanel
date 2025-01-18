@@ -4,7 +4,7 @@ import { create } from 'zustand';
 
 
 const useAnnouncement = create<AnnouncementStore>()(
-    (set, get) => ({
+    (set) => ({
         announcements: [],
         announcementsError: false,
         announcementsLoading: false,
@@ -57,7 +57,7 @@ const useAnnouncement = create<AnnouncementStore>()(
             try {
                 const response = await axiosInstance.get(`announcement/?limit=${limit}&skip=${skip}`);
                 if (response.status === 200) {
-                    set({ announcements: response.data });
+                    set({ announcementsLoading: false, announcements: response.data });
                 }
             } catch (error) {
                 console.error("Error  on get announcements:", error);
@@ -96,6 +96,25 @@ const useAnnouncement = create<AnnouncementStore>()(
                 return false;
             }
         },
+        deleteAnnouncement: async (id: number) => {
+            set({ announcementsLoading: true });
+
+            try {
+                const res = await axiosInstance.delete(`announcement/${id}/`);
+
+                if (res.status === 200) {
+                    set({ announcementsLoading: false });
+                    return true;
+                } else {
+                    set({ announcementsError: true, announcementsLoading: false });
+                    return false;
+                }
+            } catch (error) {
+                console.error("Error deleting announcements:", error);
+                set({ announcementsError: true, announcementsLoading: false });
+                return false;
+            }
+        }
     })
 );
 

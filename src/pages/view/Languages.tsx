@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import useLangStore from '../../store/useLangStore';
 import { ROUTES } from '../../constants/routes';
 
+
 const Languages: React.FC = () => {
 
   const { getLangs, langs } = useLangStore();
@@ -11,6 +12,8 @@ const Languages: React.FC = () => {
   useEffect(() => {
     getLangs(15, 0);
   }, [getLangs]);
+
+
 
 
   return (
@@ -27,7 +30,6 @@ const Languages: React.FC = () => {
          getEditHref={(item) => ROUTES.UPDATE_LANGUAGE.replace(':code', String(item.code)).replace(':webid', String(item.website_id))} />
 
       </main>
-
 
     </div>
   );

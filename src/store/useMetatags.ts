@@ -58,6 +58,23 @@ const useMetatagsStore = create<MetaTagsStore>()(
                 return false;
             }
 
+        },
+        deleteMetatag: async (id: number): Promise<boolean> => {
+            set({ metaTagsLoading: true });
+            try {
+                const res = await axiosInstance.delete(`metatag/${id}/`);
+                if (res.status === 200) {
+                    set({ metaTagsLoading: false });
+                    return true;
+                } else {
+                    set({ metaTagsLoading: false });
+                    return false;
+                }
+            } catch (error) {
+                console.error("Error deleting metatags:", error);
+                set({ metaTagsError: true, metaTagsLoading: false });
+                return false;
+            }
         }
 
     })

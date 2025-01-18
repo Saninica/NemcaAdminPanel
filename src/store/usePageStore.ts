@@ -68,6 +68,23 @@ const usePageStore = create<PageStore>()(
 
         return get().pageError;
       },
+      deletePage: async (id: number): Promise<boolean> => {
+        set({ pageLoading: true });
+        try {
+            const res = await axiosInstance.delete(`page/${id}/`);
+            if (res.status === 200) {
+                set({ pageError: false, pageLoading: false });
+                return true;
+            } else {
+                set({ pageError: true, pageLoading: false });
+                return false;
+            }
+        } catch (error) {
+            console.error("Error deleting page:", error);
+            set({ pageError: true, pageLoading: false });
+            return false;
+        }
+    }
     }),
   
 );

@@ -107,6 +107,23 @@ const useContentStore = create<PageContentStore>()(
         return false;
       }
     },
+    deleteContent: async (id: number): Promise<boolean> => {
+      set({ pageContentLoading: true });
+      try {
+        const res = await axiosInstance.delete(`content/${id}/`);
+        if (res.status === 200) {
+          set({ pageContentLoading: false });
+          return true;
+        } else {
+          set({ pageContentLoading: false });
+          return false;
+        }
+      } catch (error) {
+        console.error("Error  on delete contents:", error);
+        set({ pageContentError: true, pageContentLoading: false });
+        return false;
+      }
+    }
   })
   
 );

@@ -13,7 +13,7 @@ export default function UpdateLangForm({ langCode, webid }: { langCode: string ,
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const {  getLang , updateLang, langLoading, langError} = useLangStore();
+  const {  getLang , updateLang, langLoading} = useLangStore();
 
   useEffect(() => {
     let isMounted = true;
