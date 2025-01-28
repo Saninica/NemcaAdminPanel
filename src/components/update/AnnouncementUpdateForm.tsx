@@ -71,7 +71,9 @@ export default function AnnouncementUpdateForm({ announcementId }: {  announceme
 
     formData.append('page_id', data.page_id.toString());
     formData.append('language_code', data.language_code);
-    formData.append('website_id', data.website_id.toString());
+    if (Number(data.website_id)) {
+      formData.append('website_id', data.website_id.toString());
+    } 
     
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);

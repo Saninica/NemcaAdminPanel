@@ -1,7 +1,10 @@
-import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldValues, Path, PathValue } from 'react-hook-form';
 import { FormField } from '../types/form';
 import TinyMCE from './TinyEditor';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import useLangStore from '../store/useLangStore';
+import useWebsite from '../store/useWebsite';
+import usePageStore from '../store/usePageStore';
 
 interface BaseFormProps<T extends FieldValues> {
   fields: FormField<T, keyof T>[];
@@ -16,11 +19,17 @@ function BaseFormLayout<T extends FieldValues>({
   submitButtonText,
   fieldValues
 }: BaseFormProps<T>) {
+  const { getLangs, langs } = useLangStore();
+  const { getWebsites, websites } = useWebsite();
+  const { getPages , pages} = usePageStore();
+  const [tinyMceContent, setTinyMceContent] = useState<string>("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
+    setValue
   } = useForm<T>();
 
   useEffect(() => {
@@ -29,8 +38,37 @@ function BaseFormLayout<T extends FieldValues>({
     }
   }, [fieldValues, reset]);
 
+
+  useEffect(() => {
+    fields.forEach((field) => {
+      if (field.label === "Website Id") {
+        getWebsites(10, 0); // Provide appropriate arguments
+      } else if (field.label === "Page Id") {
+        getPages(10,0);
+      } else if (field.label === "Language Id") {
+        getLangs(19,0);
+      }
+    });
+  }, [fields, getLangs, getWebsites, getPages]);
+
+ 
+  const handleTinyMceContentChange = (content: string) => {
+    setTinyMceContent(content);
+    setValue("body" as Path<T>, content as PathValue<T, Path<T>>);
+  };
+
+  const onSubmitHandler = (data: T) => {
+    let formData = data;
+    console.log(tinyMceContent);
+    if(tinyMceContent.length > 0) {
+      formData = { ...data, body: tinyMceContent };
+    }
+
+    onSubmit(formData);
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+    <form onSubmit={handleSubmit(onSubmitHandler)} encType="multipart/form-data">
       <div className='space-y-12'>
         <div className="border-b border-gray-900/10 pb-12 ">
 
@@ -51,22 +89,25 @@ function BaseFormLayout<T extends FieldValues>({
                   {field.label}
                 </label>
                 <div className="mt-1 col-span-full">
-                  {field.type === 'select' && field.options ? (
+                  {field.label.toString().includes('Id') ? (
                     <select
-                      id={String(field.name)}
-                      {...register(field.name as any, { required: field.required })}
-                      className={`block w-full shadow-sm sm:text-sm rounded-md ${errors[field.name]
-                          ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                          : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'
-                        } bg-gray-700 text-white`}
-                    >
-                      <option>Select {field.label}</option>
-                      {field.options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
+                    id={String(field.name)}
+                    {...register(field.name as any, { required: field.required })}
+                    className={`block w-full shadow-sm sm:text-sm rounded-md ${
+                      errors[field.name]
+                        ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                        : "border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                    } bg-gray-700 text-white`}
+                  >
+                    <option>Select {field.label}</option>
+                    {(field.label === "Website Id" ? websites : field.label === "Page Id" ? pages : langs).map(
+                      (option: any) => (
+                        <option key={option.id} value={option.id}>
+                          {option.name} 
                         </option>
-                      ))}
-                    </select>
+                      )
+                    )}
+                  </select>
                   ) : field.type === 'textarea' ? (
                     <textarea
                       id={String(field.name)}
@@ -117,7 +158,7 @@ function BaseFormLayout<T extends FieldValues>({
 
                   ) : field.name == 'body' && submitButtonText.includes('Blog') ? (
                     <div className='col-span-full mb-14'>
-                      <TinyMCE nameProp={field.name} idProp={String(field.name)}/>
+                      <TinyMCE nameProp={field.name} idProp={String(field.name)} onContentChange={handleTinyMceContentChange}/>
                     </div>
                   ) : (
                     <div className='col-span-full'>

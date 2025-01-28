@@ -13,6 +13,7 @@ export interface Blog extends BlogBase {
 export interface BlogStore {
     createBlog: (blog: BlogBase) => Promise<void>;
     getBlogs: (limit: number, skip: number) => Promise<void>;
+    deleteBlog: (id: number) => Promise<boolean>;
     blogs: Blog[] | [];
     blogsLoading: boolean;
     blogsError: boolean;

@@ -55,6 +55,9 @@ export default function UpdateMetatagForm({ metatagId }: { metatagId: number }) 
   if (error) return <p className="text-red-500">{error}</p>;
 
   const handleUpdateSubmit = async (data: MetaTagsBase) => {
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
     const result = await updateMetatag(metatagId, data);
     if (result) {
       toast.success('Metatag updated successfully');

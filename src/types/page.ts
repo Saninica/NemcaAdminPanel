@@ -1,7 +1,7 @@
 export interface PageBase {
     id: number;
     name: string;
-    website_id: number;
+    website_id?: number;
 }
 
 export interface PageCreate {
@@ -10,7 +10,7 @@ export interface PageCreate {
 
 export interface PageUpdate {
     name: string;
-    website_id: number;
+    website_id?: number;
 }
 
 export interface PageRead extends PageBase {
@@ -33,7 +33,7 @@ export interface PageContentSchema {
     id: number;
     page_id: number;
     website_id: number;
-    language_code: string;
+    language_id: number;
     title: string;
     body: string;
     cover_image: string;
@@ -64,7 +64,7 @@ export interface PageContentRead {
 
 export interface PageContentCreate {
     page_id: number;
-    language_code: string;
+    language_id: number;
     title: string;
     body: string;
 }

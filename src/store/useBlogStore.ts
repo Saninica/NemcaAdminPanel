@@ -11,7 +11,7 @@ const useBlogStore = create<BlogStore>()(
 
         createBlog: async (blog: BlogBase) => {
             set({ blogsLoading: true });
-
+            console.log(blog);
             const res = await axiosInstance.post('blog/', blog);
 
             if (res.status === 200) {
@@ -34,6 +34,25 @@ const useBlogStore = create<BlogStore>()(
             } catch (error) {
                 console.error("Error  on get blogs:", error);
                 set({ blogsError: true, blogsLoading: false });
+            }
+        },
+        deleteBlog: async (id: number) => {
+            set({ blogsLoading: true });
+
+            try {
+                const res = await axiosInstance.delete(`blog/${id}/`);
+
+                if (res.status === 200) {
+                    set({ blogsLoading: false });
+                    return true;
+                } else {
+                    set({ blogsError: true, blogsLoading: false });
+                    return false;
+                }
+            } catch (error) {
+                console.error("Error deleting blog:", error);
+                set({ blogsError: true, blogsLoading: false });
+                return false;
             }
         }
     }),

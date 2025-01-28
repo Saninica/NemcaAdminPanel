@@ -53,6 +53,10 @@ export default function UpdateLangForm({ langCode, webid }: { langCode: string ,
   if (error) return <p className="text-red-500">{error}</p>;
 
   const handleUpdateSubmit = async (data: LanguageBase) => {
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
+    
     const result = await updateLang(data, langCode, webid);
     if (result) {
       toast.error("Error updating language.");

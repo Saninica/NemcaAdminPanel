@@ -1,7 +1,14 @@
+
+interface Website {
+    id: number;
+    name: string;
+}
 export interface User {
     id: number;
     username: string;
     email: string;
+    is_superuser: boolean;
+    websites: Website[];
 }
   
 export interface AuthState {

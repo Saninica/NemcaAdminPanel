@@ -32,6 +32,12 @@ export default function BlogForm() {
   };
 
   const handleSubmit = async (data: BlogBase) => {
+    console.log(data);
+    
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
+    
     await createBlog(data);
     toast.success('Blog created successfully');
   };

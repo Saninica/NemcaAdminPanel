@@ -56,6 +56,10 @@ export default function UpdatePageForm({ pageId }: { pageId: number }) {
   if (error) return <p className="text-red-500">{error}</p>;
 
   const handleUpdateSubmit = async (data: PageUpdate) => {
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
+    
     const result = await updatePage(pageId, data);
     if (result) {
       toast.error('Error updating page');

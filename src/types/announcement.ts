@@ -7,7 +7,7 @@ export interface AnnouncementBase {
     end_date: string;
     page_id: number;
     website_id: number;
-    language_code: string;
+    language_id: number;
 }
 
 export interface AnnouncementUpdate extends Omit<AnnouncementBase, 'cover_image' | 'id'> {

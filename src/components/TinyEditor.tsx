@@ -2,11 +2,15 @@ import { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
-    tinymce: any; // Replace `any` with TinyMCE’s type if you have it installed
+    tinymce: any;
   }
 }
 
-export default function TinyMCE({ nameProp, idProp }: { nameProp: string, idProp: string }) {
+export default function TinyMCE({ nameProp, idProp, onContentChange }: {
+  nameProp: string, idProp: string,
+  onContentChange: (content: string) => void
+}) {
+
   const editorRef = useRef<HTMLTextAreaElement | null>(null);
   const [content, setContent] = useState<string>("");
 
@@ -28,24 +32,25 @@ export default function TinyMCE({ nameProp, idProp }: { nameProp: string, idProp
           // Menubar, plugins, toolbar, etc.
           menubar: "file edit view insert format",
           plugins:
-            "link image media pageembed template anchor codesample " +
-            "charmap emoticons fullscreen preview save print insertfile " +
-            "ltr rtl  code " +
+            "link image media pageembed  anchor codesample " +
+            "charmap emoticons fullscreen preview save" +
+            " code " +
             // Below are some from your partial config. Feel free to remove if not needed:
-            "lists checklist forecolor backcolor casechange permanentpen formatpainter pagebreak",
+            "lists checklist backcolor casechange pagebreak",
           toolbar:
             "undo redo | bold italic underline strikethrough | " +
             "fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | " +
-            "outdent indent | numlist bullist checklist | forecolor backcolor casechange permanentpen " +
-            "formatpainter removeformat | pagebreak | fullscreen preview save print | " +
-            "insertfile image media pageembed template link anchor codesample | ltr rtl | " +
+            "outdent indent | numlist bullist checklist | " +
+            "removeformat | pagebreak | fullscreen preview save print | " +
+            "insertfile | image | media | pageembed | link | anchor | codesample | ltr rtl | " +
             " code",
 
+          license_key: 'gpl',
           // Image uploads
           images_upload_url: "http://127.0.0.1:8000/admin-api/api/tinyfile/", // FastAPI endpoint
           automatic_uploads: true,
           file_picker_types: "image",
-          document_base_url:"http://127.0.0.1:8000/admin-api/",
+          document_base_url: "http://127.0.0.1:8000/admin-api/",
 
           // Add your file picker callback
           file_picker_callback: (callback: any, _value: any, meta: any) => {
@@ -91,6 +96,7 @@ export default function TinyMCE({ nameProp, idProp }: { nameProp: string, idProp
           setup: (editor: any) => {
             editor.on("Change", () => {
               setContent(editor.getContent());
+              onContentChange(editor.getContent());
             });
           },
         });
@@ -104,19 +110,19 @@ export default function TinyMCE({ nameProp, idProp }: { nameProp: string, idProp
         }
       };
     }
-  }, []);
+  }, [[onContentChange]]);
 
   return (
-    <div className="w-96 h-48">
+    <>
       <textarea
         ref={editorRef}
         defaultValue="<p>Initial content here...</p>"
         id={idProp}
-        className="block"
+        className="block w-96 h-48"
         name={nameProp}
       />
       <p hidden>Editor Content:</p>
       <pre hidden>{content}</pre>
-    </div>
+    </>
   );
 }

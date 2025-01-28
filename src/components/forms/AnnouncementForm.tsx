@@ -40,8 +40,7 @@ export default function AnnouncementForm() {
     formData.append('body', data.body);
 
     formData.append('page_id', data.page_id.toString());
-    formData.append('website_id', data.website_id.toString());
-    formData.append('language_code', data.language_code);
+    formData.append('language_id', data.language_id.toString());
 
     formData.append('start_date', data.start_date.toString());
     formData.append('end_date', data.end_date.toString());
@@ -49,6 +48,10 @@ export default function AnnouncementForm() {
     if (data.cover_image){
       formData.append('cover_image', data.cover_image[0]);
     }
+
+    if (Number(data.website_id)) {
+      formData.append('website_id', data.website_id.toString());
+    } 
 
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);

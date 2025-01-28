@@ -33,6 +33,9 @@ export default function PageForm() {
 
 
   const handleSubmit = async (data: PageBase) => {
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
     await createPage(data);
     toast.success('Page created successfully');
   };

@@ -1,7 +1,7 @@
 export interface MetaTagsBase {
     id?: number;
     page_id: number;
-    website_id: number;
+    website_id?: number;
     language_code: string;
     title: string;
     description: string;

@@ -32,6 +32,10 @@ export default function LanguagesForm() {
   };
 
   const handleSubmit = async (data: LangSchema) => {
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
+    
     await createLang(data);
     toast.success('Language created successfully');
   };

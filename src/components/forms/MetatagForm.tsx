@@ -32,6 +32,10 @@ export default function MetatagsForm() {
   };
 
   const handleSubmit = async (data: MetaTagsBase) => {
+    if (!Number(data.website_id)) {
+      delete data.website_id;
+    } 
+    
     await createMetaTags(data);
     toast.success('Metatag created successfully');
   };
