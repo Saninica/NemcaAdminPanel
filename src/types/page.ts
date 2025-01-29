@@ -36,6 +36,7 @@ export interface PageContentSchema {
     language_id: number;
     title: string;
     body: string;
+    price?: number;
     cover_image: string;
 }
 
@@ -50,6 +51,7 @@ export interface PageContentUpdateFormData {
     language_code: string;
     title: string;
     body: string;
+    price?: number;
 }
 
 export interface PageContentRead {
@@ -59,6 +61,7 @@ export interface PageContentRead {
     language_code: string;
     title: string;
     body: string;
+    price?: number;
     cover_image: string;
 }
 
@@ -67,6 +70,7 @@ export interface PageContentCreate {
     language_id: number;
     title: string;
     body: string;
+    price?: number;
 }
 
 export interface PageContentStore {

@@ -47,6 +47,10 @@ export default function PageContentForm() {
     formData.append('page_id', data.page_id.toString());
     formData.append('language_id', data.language_id.toString());
     
+    
+    formData.append('price', data?.price?.toString() || '0.0');
+    
+    
     if (Number(data.website_id)) {
       formData.append('website_id', data.website_id.toString());
     } 

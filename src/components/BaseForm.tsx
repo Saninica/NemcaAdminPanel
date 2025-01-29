@@ -59,8 +59,8 @@ function BaseFormLayout<T extends FieldValues>({
 
   const onSubmitHandler = (data: T) => {
     let formData = data;
-    console.log(tinyMceContent);
-    if(tinyMceContent.length > 0) {
+
+    if(tinyMceContent.toString().length > 0 && submitButtonText.includes('Blog')) {
       formData = { ...data, body: tinyMceContent };
     }
 

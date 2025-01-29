@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { LanguageBase, LangStore } from '../types/lang';
+import { LanguageBase, LangStore, LanguageCreate } from '../types/lang';
 import axiosInstance from '../api/axiosInstance';
 
 
@@ -10,7 +10,7 @@ const useLangStore = create<LangStore>()(
       langError: false,
       langLoading: false,
 
-      createLang: async (lang: LanguageBase) => {
+      createLang: async (lang: LanguageCreate) => {
         set({  langLoading: true });
 
         const res = await axiosInstance.post('language/', lang);
