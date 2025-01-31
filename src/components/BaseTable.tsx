@@ -1,11 +1,12 @@
 import { ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
+import Pagination from "./Pagination";
 
 
 interface BaseTableProps<T extends Record<string, any>> {
   pageName: string;
   data: T[];
   createHref?: string;
-  getEditHref?: (item: T) => string; 
+  getEditHref?: (item: T) => string;
   deleteSubmit?: (id: number) => Promise<void>;
 }
 
@@ -20,7 +21,7 @@ export default function BaseTable<T extends Record<string, any>>({
   data,
   createHref,
   getEditHref,
-  deleteSubmit
+  deleteSubmit,
 }: BaseTableProps<T>) {
 
   function generateColumns(data: T[]): Column<T>[] {
@@ -33,7 +34,6 @@ export default function BaseTable<T extends Record<string, any>>({
       accessor: key,
     }));
   }
-
 
   const columns: Column<T>[] = generateColumns(data);
 
@@ -76,7 +76,7 @@ export default function BaseTable<T extends Record<string, any>>({
                             {column.header}
                           </th>
                         ))}
-                      
+
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-800">
@@ -91,7 +91,7 @@ export default function BaseTable<T extends Record<string, any>>({
                             </td>
                           ))}
                           <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                            <a href={getEditHref ? getEditHref(item) : '#'} className="text-indigo-400 hover:text-indigo-300">
+                            <a href={getEditHref && getEditHref(item)} className="text-indigo-400 hover:text-indigo-300">
                               Edit<span className="sr-only">, {pageName}</span>
                             </a>
 
@@ -106,7 +106,11 @@ export default function BaseTable<T extends Record<string, any>>({
                 </div>
               </div>
             </div>
+
+
           </div>
+          <Pagination />
+
         </div>
       </div>
     </div>

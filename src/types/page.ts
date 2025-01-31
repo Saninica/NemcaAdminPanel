@@ -73,14 +73,21 @@ export interface PageContentCreate {
     price?: number;
 }
 
+
+
 export interface PageContentStore {
     pageContents: PageContentRead[] | [];
+    total: number;    
+    limit: number; 
+    page: number; 
+    skip: number;
     pageContent: PageContentRead | undefined;
+    setPage: (page: number) => void;
     pageContentError: boolean;
     pageContentLoading: boolean;
     getPageContent: (id: number) => Promise<PageContentRead | undefined>;
     updatePageContent: (id: number, content: FormData) => Promise<boolean>;
     createPageContent: (content: FormData) => Promise<void>;
-    getPageContents: (limit: number, skip: number) => Promise<void>;
+    getPageContents: (page?: number) => Promise<void>;
     deleteContent: (id: number) => Promise<boolean>;
 }

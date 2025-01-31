@@ -6,8 +6,12 @@ import axiosInstance from '../api/axiosInstance';
 const useContentStore = create<PageContentStore>()(
     (set, get) => ({
       pageContents: [],
+      total: 0,
+      limit: 10,
+      skip: 0,
+      page: 1,
       pageContentError: false,
-      pageContentLoading: false,
+      pageContentLoading: true,
       pageContent: undefined,
 
       createPageContent: async (content: FormData) => {
@@ -34,25 +38,40 @@ const useContentStore = create<PageContentStore>()(
 
         if (res.status === 200) {
           set({ pageContentLoading: false });
-          get().getPageContents(15, 0);
+          get().getPageContents(get().page);
         } else {
           set({ pageContentError: true, pageContentLoading: false });
         }
       },
 
-      getPageContents: async (limit: number = 15, skip: number = 0) => {
+      getPageContents: async (page?: number) => {
         set({ pageContentLoading: true });
+        const currentPage = page ?? get().page;
+        const limit = get().limit;
+        const skip = (currentPage - 1) * limit;
+        
+        console.log("page", currentPage);
+        
+        console.log("limit", limit, "skip", skip);
+
         try {
           const response = await axiosInstance.get(`content/?limit=${limit}&skip=${skip}`);
           
           if (response.status === 200) {
-            set({ pageContents: response.data });
+            set({ 
+              pageContents: response.data.items, total: response.data.total, 
+              limit: response.data.limit, skip: response.data.skip, pageContentLoading: false
+            });
           }
 
         } catch (error) {
           console.error("Error  on get contents:", error);
           set({ pageContentError: true, pageContentLoading: false });
         }
+        set({ pageContentLoading: false });
+      },
+      setPage: (newPage: number) => {
+        set({ page: newPage});
       },
       getPageContent: async(id: number): Promise<PageContentRead | undefined> => {
         set({ pageContentLoading: true });

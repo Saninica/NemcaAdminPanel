@@ -7,18 +7,25 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const PageContent: React.FC = () => {
 
-  const { getPageContents, pageContents, deleteContent } = useContentStore();
+  const {
+    getPageContents,
+    pageContents,
+    deleteContent,
+    pageContentLoading,
+  } = useContentStore();
 
   useEffect(() => {
-    getPageContents(15, 0);
-  }, [getPageContents]);
+    getPageContents(1);
+  }, []);
+
+
 
   async function handleDelete(id: number) {
     const result = await deleteContent(id);
     if (result) {
       toast.success('Page content deleted!');
-      getPageContents(15, 0);
-    } 
+      getPageContents(1);
+    }
 
   }
 
@@ -32,11 +39,13 @@ const PageContent: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName = 'Sayfa İçerikleri' data={pageContents} createHref={ROUTES.CREATE_CONTENT} 
-         getEditHref={(item) => ROUTES.UPDATE_CONTENT.replace(':id', String(item.id))}
-          deleteSubmit={handleDelete}
-        />
-
+        {pageContentLoading ?
+          <div className="text-center">Loading...</div> :
+          <BaseTable pageName='Sayfa İçerikleri' data={pageContents} createHref={ROUTES.CREATE_CONTENT}
+            getEditHref={(pageContents) => ROUTES.UPDATE_CONTENT.replace(':id', String(pageContents.id))}
+            deleteSubmit={handleDelete} 
+          />
+        }
       </main>
 
       <ToastContainer />
