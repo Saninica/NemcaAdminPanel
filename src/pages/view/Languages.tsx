@@ -3,18 +3,25 @@ import BaseTable from '../../components/BaseTable';
 import Navbar from '../../components/Navbar';
 import useLangStore from '../../store/useLangStore';
 import { ROUTES } from '../../constants/routes';
+import BasePagination from '../../components/BasePagination';
 
 
 const Languages: React.FC = () => {
 
-  const { getLangs, langs } = useLangStore();
+  const { getLangs, langs, setPage,
+    page,
+    total,
+    limit,
+    skip } = useLangStore();
 
   useEffect(() => {
-    getLangs(15, 0);
-  }, [getLangs]);
+    getLangs(page);
+  }, [page, limit, skip]);
 
 
-
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  }
 
   return (
 
@@ -29,6 +36,14 @@ const Languages: React.FC = () => {
         <BaseTable pageName = 'Dil' data={langs} createHref={ROUTES.CREATE_LANGUAGE} 
          getEditHref={(item) => ROUTES.UPDATE_LANGUAGE.replace(':code', String(item.code)).replace(':webid', String(item.website_id))} />
 
+
+         
+        <BasePagination
+          currentPage={page}
+          totalItems={total} 
+          itemsPerPage={limit}
+          onPageChange={handlePageChange}
+        />
       </main>
 
     </div>

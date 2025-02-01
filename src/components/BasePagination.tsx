@@ -27,11 +27,11 @@ export default function BasePagination({
         <button
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
-          className="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 
+          className="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 
                      text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700 
                      disabled:opacity-50"
         >
-          <ArrowLongLeftIcon aria-hidden="true" className="mr-3 w-5 text-gray-400" />
+          <ArrowLongLeftIcon aria-hidden="true" className="mr-3 w-5 text-white" />
           Previous
         </button>
       </div>

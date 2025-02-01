@@ -46,7 +46,7 @@ function BaseFormLayout<T extends FieldValues>({
       } else if (field.label === "Page Id") {
         getPages(10,0);
       } else if (field.label === "Language Id") {
-        getLangs(19,0);
+        getLangs(1);
       }
     });
   }, [fields, getLangs, getWebsites, getPages]);

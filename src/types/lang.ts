@@ -14,13 +14,18 @@ export interface LanguageCreate {
   
 export interface LangStore  {
   createLang: (lang: LanguageCreate) => Promise<void>;
-  getLangs: (limit: number, skip: number) => Promise<void>;
+  getLangs: (page?: number) => Promise<void>;
   getLang: (langcode: string, website_id: number) => Promise<LanguageBase | undefined>;
   updateLang: (lang: LanguageBase, lang_code: string, website_id: number) => Promise<boolean>;
   langs: LanguageBase[] | [];
   lang: LanguageBase | undefined;
   langLoading: boolean;
   langError: boolean;
+  total: number;    
+  limit: number; 
+  page: number; 
+  skip: number;
+  setPage: (page: number) => void;
 }
 
 

@@ -27,9 +27,7 @@ const useContentStore = create<PageContentStore>()(
             content.delete('cover_image');
           }
         } 
-
-
-        
+                
         const res = await axiosInstance.post('content/', content, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -50,10 +48,6 @@ const useContentStore = create<PageContentStore>()(
         const limit = get().limit;
         const skip = (currentPage - 1) * limit;
         
-        console.log("page", currentPage);
-        
-        console.log("limit", limit, "skip", skip);
-
         try {
           const response = await axiosInstance.get(`content/?limit=${limit}&skip=${skip}`);
           
