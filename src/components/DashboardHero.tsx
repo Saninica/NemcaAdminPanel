@@ -9,6 +9,7 @@ import {
 } from '@heroicons/react/24/outline'
 import useAuthStore from '../store/useAuthStore';
 import { ROUTES } from '../constants/routes';
+import { Link } from 'react-router-dom';
 
 
 
@@ -92,11 +93,11 @@ export default function DashboardHero() {
                             </div>
                             <div>
                                 <h3 className="text-sm font-medium text-gray-50">
-                                    <a href={item.href} className="focus:outline-none">
+                                    <Link to={item.href} className="focus:outline-none">
                                         <span aria-hidden="true" className="absolute inset-0" />
                                         <span>{item.title}</span>
                                         <span aria-hidden="true"> &rarr;</span>
-                                    </a>
+                                    </Link>
                                 </h3>
                                 <p className="mt-1 text-sm text-gray-50">{item.description}</p>
                             </div>

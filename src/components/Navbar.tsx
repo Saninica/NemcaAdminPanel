@@ -1,7 +1,8 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, HomeIcon } from '@heroicons/react/24/outline'
 import useAuthStore from '../store/useAuthStore';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { ROUTES } from '../constants/routes';
 
 
 
@@ -12,7 +13,7 @@ function classNames(...classes: any) {
 export default function Navbar() {
 
     const navigation = [
-        { name: 'Dashboard', href: '/dashboard', current: true },
+        { name: 'Dashboard', href: ROUTES.DASHBOARD, current: true },
         //{ name: 'Models', href: '#', current: false },
         //{ name: 'Projects', href: '#', current: false },
     ]
@@ -48,9 +49,9 @@ export default function Navbar() {
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 {navigation.map((item) => (
-                                    <a
+                                    <Link
                                         key={item.name}
-                                        href={item.href}
+                                        to={item.href}
                                         aria-current={item.current ? 'page' : undefined}
                                         className={classNames(
                                             item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -58,7 +59,7 @@ export default function Navbar() {
                                         )}
                                     >
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         </div>
@@ -98,8 +99,8 @@ export default function Navbar() {
                     {navigation.map((item) => (
                         <DisclosureButton
                             key={item.name}
-                            as="a"
-                            href={item.href}
+                            as={Link}
+                            to={item.href}
                             aria-current={item.current ? 'page' : undefined}
                             className={classNames(
                                 item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
