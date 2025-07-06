@@ -32,7 +32,7 @@ const Blogs: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName='Blog İçeriği' data={blogs} createHref={ROUTES.CREATE_BLOGS}
+        <BaseTable pageName='Blog İçeriği' data={(blogs || []) as unknown as Record<string, unknown>[]} createHref={ROUTES.CREATE_BLOGS}
           deleteSubmit={handleDelete} />
 
       </main>

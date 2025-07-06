@@ -1,5 +1,4 @@
-import React from 'react';
-import { FieldValues, Path, UseFormRegister, FieldError } from 'react-hook-form';
+import { FieldError, Path, UseFormRegister, FieldValues } from 'react-hook-form';
 import { FormField as FormFieldType, SelectOption } from '../../types/form';
 import TinyMCE from '../TinyEditor';
 

@@ -33,7 +33,7 @@ const Pages: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName = 'Sayfa' data={pages} createHref={ROUTES.CREATE_PAGE}
+        <BaseTable pageName = 'Sayfa' data={(pages || []) as unknown as Record<string, unknown>[]} createHref={ROUTES.CREATE_PAGE}
           getEditHref={(item) => ROUTES.UPDATE_PAGE.replace(':id', String(item.id))} 
           deleteSubmit={handleDelete}
           />

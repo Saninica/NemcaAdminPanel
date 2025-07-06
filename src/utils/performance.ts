@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useRef, useState, useEffect } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 
 // Memoization utilities
 export const memoize = <T extends (...args: any[]) => any>(fn: T): T => {

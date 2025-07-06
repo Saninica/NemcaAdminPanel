@@ -54,7 +54,7 @@ const PageContent: React.FC = () => {
         {pageContentLoading ?
           <Loading color='text-green-400'/>
           :
-          <BaseTable pageName='Sayfa İçerikleri' data={pageContents} createHref={ROUTES.CREATE_CONTENT}
+          <BaseTable pageName='Sayfa İçerikleri' data={(pageContents || []) as unknown as Record<string, unknown>[]} createHref={ROUTES.CREATE_CONTENT}
             getEditHref={(pageContents) => ROUTES.UPDATE_CONTENT.replace(':id', String(pageContents.id))}
             deleteSubmit={handleDelete} 
           />
