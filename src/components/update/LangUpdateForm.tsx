@@ -59,9 +59,9 @@ export default function UpdateLangForm({ langCode, webid }: { langCode: string ,
     
     const result = await updateLang(data, langCode, webid);
     if (result) {
-      toast.error("Error updating language.");
-    } else {
       toast.success("Language updated successfully!");
+    } else {
+      toast.error("Error updating language.");
     }
   };
 

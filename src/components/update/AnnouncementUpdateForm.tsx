@@ -85,9 +85,9 @@ export default function AnnouncementUpdateForm({ announcementId }: {  announceme
     
     const result = await updateAnnouncement(announcementId, formData);
     if (result) {
-      toast.error("Error updating announcement.");
-    } else {
       toast.success("Announcement updated successfully!");
+    } else {
+      toast.error("Error updating announcement.");
     }
   };
 

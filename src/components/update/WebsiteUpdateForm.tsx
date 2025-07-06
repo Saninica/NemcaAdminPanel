@@ -53,17 +53,35 @@ export default function WebsiteUpdateForm({ websiteId }: { websiteId: number }) 
   if (loading) return <p>Loading...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
-  const handleUpdateSubmit = async (data: FormData) => {
-    const result = await updateWebsite(websiteId, data);
+  const handleUpdateSubmit = async (data: any) => {
+    // Convert the plain object to FormData since updateWebsite expects FormData
+    const formData = new FormData();
+    
+    // Add all fields to FormData
+    Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (value !== null && value !== undefined) {
+        if (value instanceof File) {
+          formData.append(key, value);
+        } else if (value instanceof FileList && value.length > 0) {
+          formData.append(key, value[0]);
+        } else {
+          formData.append(key, value.toString());
+        }
+      }
+    });
+
+    const result = await updateWebsite(websiteId, formData);
+    // Fix inverted logic: result is true on success, false on failure
     if (result) {
-      toast.error('Error updating website');
+      toast.success('Website updated successfully');
     } else {
-      toast.success('website updated successfully');
+      toast.error('Error updating website');
     }
   };
 
   return (
-    <BaseForm<FormData>
+    <BaseForm<any>
       config={{ 
         fields: fields,
         defaultValues: fieldValues 

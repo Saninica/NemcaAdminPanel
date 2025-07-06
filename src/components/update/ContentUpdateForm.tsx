@@ -87,9 +87,9 @@ export default function ContentUpdateForm({ contentId }: {  contentId: number}) 
     
     const result = await updatePageContent(contentId, formData);
     if (result) {
-      toast.error("Error updating page contnet.");
-    } else {
       toast.success("Page content updated successfully!");
+    } else {
+      toast.error("Error updating page content.");
     }
   };
 

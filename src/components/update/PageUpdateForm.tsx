@@ -62,9 +62,9 @@ export default function UpdatePageForm({ pageId }: { pageId: number }) {
     
     const result = await updatePage(pageId, data);
     if (result) {
-      toast.error('Error updating page');
-    } else {
       toast.success('Page updated successfully');
+    } else {
+      toast.error('Error updating page');
     }
   };
 
