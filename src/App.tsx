@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const App: React.FC = () => {
   return (
     <ErrorBoundary showDetails={import.meta.env.DEV}>
-      <Router basename="/admin">
+      <Router basename="/admin/">
         <div className="min-h-screen bg-gray-900">
           <AppRoutes />
           
