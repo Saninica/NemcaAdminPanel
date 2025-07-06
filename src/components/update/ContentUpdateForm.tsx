@@ -1,4 +1,4 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
@@ -40,7 +40,7 @@ export default function ContentUpdateForm({ contentId }: {  contentId: number}) 
       setFields(data || []);
       if(page_content !== undefined) {
         const { id, ...rest } = page_content;
-        if (rest.cover_image) rest.cover_image = "http://127.0.0.1:8000/admin-api/" + rest.cover_image;
+        if (rest.cover_image) rest.cover_image = "http://185.23.72.79/admin-api/" + rest.cover_image;
         setFieldValues(rest);
         console.log(rest);
       }
@@ -94,9 +94,12 @@ export default function ContentUpdateForm({ contentId }: {  contentId: number}) 
   };
 
   return (
-    <BaseFormLayout<PageContentUpdateFormData>
-      fields={fields}
-      fieldValues={fieldValues}
+    <BaseForm<PageContentUpdateFormData>
+      config={{ 
+        fields: fields,
+        defaultValues: fieldValues 
+      }}
+      initialValues={fieldValues}
       onSubmit={handleUpdateSubmit}
       submitButtonText="Update Page Content"
     />

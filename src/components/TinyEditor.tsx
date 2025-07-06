@@ -47,10 +47,10 @@ export default function TinyMCE({ nameProp, idProp, onContentChange }: {
 
           license_key: 'gpl',
           // Image uploads
-          images_upload_url: "http://127.0.0.1:8000/admin-api/api/tinyfile/", // FastAPI endpoint
+          images_upload_url: "http://185.23.72.79/admin-api/api/tinyfile/", // FastAPI endpoint
           automatic_uploads: true,
           file_picker_types: "image",
-          document_base_url: "http://127.0.0.1:8000/admin-api/",
+          document_base_url: "http://185.23.72.79/admin-api/",
 
           // Add your file picker callback
           file_picker_callback: (callback: any, _value: any, meta: any) => {
@@ -67,7 +67,8 @@ export default function TinyMCE({ nameProp, idProp, onContentChange }: {
                 formData.append("file", file);
 
                 // Post to your FastAPI endpoint
-                fetch("http://127.0.0.1:8000/admin-api/api/tinyfile/", {
+                // http://127.0.0.1:8000/admin-api/api/tinyfile/
+                fetch("http://185.23.72.79/admin-api/api/tinyfile/", {
                   method: "POST",
                   body: formData,
                   // If you need any headers, set them here

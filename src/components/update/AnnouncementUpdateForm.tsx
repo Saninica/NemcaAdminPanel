@@ -1,4 +1,4 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
@@ -40,7 +40,7 @@ export default function AnnouncementUpdateForm({ announcementId }: {  announceme
       setFields(data || []);
       if(page_content !== undefined) {
         console.log(page_content);
-        if (page_content.cover_image) page_content.cover_image = "http://127.0.0.1:8000/admin-api/" + page_content.cover_image;
+        if (page_content.cover_image) page_content.cover_image = "http://185.23.72.79/admin-api/" + page_content.cover_image;
         page_content.start_date = page_content.start_date.toString().split('T')[0];
         page_content.end_date = page_content.end_date.toString().split('T')[0];
         setFieldValues(page_content);
@@ -92,9 +92,12 @@ export default function AnnouncementUpdateForm({ announcementId }: {  announceme
   };
 
   return (
-    <BaseFormLayout<PageContentUpdateFormData>
-      fields={fields}
-      fieldValues={fieldValues}
+    <BaseForm<PageContentUpdateFormData>
+      config={{ 
+        fields: fields,
+        defaultValues: fieldValues 
+      }}
+      initialValues={fieldValues}
       onSubmit={handleUpdateSubmit}
       submitButtonText="Update Announcement"
     />

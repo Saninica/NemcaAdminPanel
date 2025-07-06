@@ -8,11 +8,13 @@ import BasePagination from '../../components/BasePagination';
 
 const Languages: React.FC = () => {
 
-  const { getLangs, langs, setPage,
+  const { getLangs, data, setPage,
     page,
     total,
     limit,
-    skip } = useLangStore();
+    skip,
+    isLoading,
+    error } = useLangStore();
 
   useEffect(() => {
     getLangs(page);
@@ -33,8 +35,14 @@ const Languages: React.FC = () => {
 
       <main className="max-w-7xl mx-auto p-4">
 
-        <BaseTable pageName = 'Dil' data={langs} createHref={ROUTES.CREATE_LANGUAGE} 
-         getEditHref={(item) => ROUTES.UPDATE_LANGUAGE.replace(':code', String(item.code)).replace(':webid', String(item.website_id))} />
+        <BaseTable 
+          pageName='Dil' 
+          data={(data || []) as unknown as Record<string, unknown>[]} 
+          createHref={ROUTES.CREATE_LANGUAGE}
+          isLoading={isLoading}
+          error={error}
+          getEditHref={(item) => ROUTES.UPDATE_LANGUAGE.replace(':code', String(item.code)).replace(':webid', String(item.website_id))} 
+        />
 
 
          

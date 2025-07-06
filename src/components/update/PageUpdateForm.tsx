@@ -1,4 +1,4 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { PageBase, PageUpdate } from '../../types/page';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
@@ -69,9 +69,12 @@ export default function UpdatePageForm({ pageId }: { pageId: number }) {
   };
 
   return (
-    <BaseFormLayout<PageBase>
-      fields={fields}
-      fieldValues={fieldValues}
+    <BaseForm<PageBase>
+      config={{ 
+        fields: fields,
+        defaultValues: fieldValues 
+      }}
+      initialValues={fieldValues}
       onSubmit={handleUpdateSubmit}
       submitButtonText="Update Page"
     />

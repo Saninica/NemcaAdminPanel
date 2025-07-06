@@ -1,61 +1,49 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
 import useWebsite from '../../store/useWebsite';
-import { WebsiteFormData } from '../../types/website';
 import { toast } from 'react-toastify';
 
+interface WebsiteFormData {
+  name: string;
+  domain_url: string;
+  favicon_image?: FileList;
+}
 
 export default function WebsiteForm() {
   const [fields, setFields] = useState<FormField<any, any>[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await initializeForm('Website');
+      setFields(data || []);
+    };
+
+    fetchData();
+  }, []);
 
   const { createWebsite } = useWebsite();
 
-  useEffect(() => {
-    initializeWebsiteForm('Website');
-  }, []);
-
-  const initializeWebsiteForm = async (modelName: string) => {
-    setLoading(true);
-    try {
-      const data = await initializeForm(modelName);
-      setLoading(false);
-      setFields(data || []);
-    }
-    catch (err: any) {
-      setError(err.message || 'Error fetching website form.');
-      setLoading(false);
-    };
-  };
-
-
-
-  const handleSubmit = async (data: WebsiteFormData) => {
+  const handleWebsiteSubmit = async (data: WebsiteFormData) => {
     const formData = new FormData();
-
     formData.append('name', data.name);
     formData.append('domain_url', data.domain_url);
-
-    formData.append('favicon_image', data.favicon_image[0]);
     
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    if (data.favicon_image && data.favicon_image.length > 0) {
+      formData.append('favicon_image', data.favicon_image[0]);
     }
-
+    
     await createWebsite(formData);
-    toast.success('Website created successfully');
+    toast.success('Website created successfully!');
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-500">{error}</p>;
-
   return (
-    <BaseFormLayout<WebsiteFormData>
-      fields={fields}
-      onSubmit={handleSubmit}
+    <BaseForm<WebsiteFormData>
+      config={{ 
+        fields: fields
+      }}
+      onSubmit={handleWebsiteSubmit}
       submitButtonText="Create Website"
     />
   );

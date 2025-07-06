@@ -9,19 +9,23 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const token = useAuthStore(state => state.token);
   const checkAuthStatus = useAuthStore(state => state.checkAuthStatus);
 
   useEffect(() => {
     const validateAuth = async () => {
       try {
-        await checkAuthStatus();
+        // Only check auth status if we have a token
+        if (token) {
+          await checkAuthStatus();
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     validateAuth();
-  }, [checkAuthStatus]); 
+  }, []); // Remove checkAuthStatus from dependencies to prevent infinite loop 
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -1,4 +1,4 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
@@ -13,7 +13,7 @@ export default function UpdateLangForm({ langCode, webid }: { langCode: string ,
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const {  getLang , updateLang, langLoading} = useLangStore();
+  const {  getLang , updateLang, isLoading } = useLangStore();
 
   useEffect(() => {
     let isMounted = true;
@@ -49,7 +49,7 @@ export default function UpdateLangForm({ langCode, webid }: { langCode: string ,
 
   
   if (loading) return <p>Loading Form..</p>;
-  if (langLoading) return <p>Updating lang...</p>;
+  if (isLoading) return <p>Updating lang...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
   const handleUpdateSubmit = async (data: LanguageBase) => {
@@ -66,9 +66,12 @@ export default function UpdateLangForm({ langCode, webid }: { langCode: string ,
   };
 
   return (
-    <BaseFormLayout<LanguageBase>
-      fields={fields}
-      fieldValues={fieldValues}
+    <BaseForm<LanguageBase>
+      config={{ 
+        fields: fields,
+        defaultValues: fieldValues 
+      }}
+      initialValues={fieldValues}
       onSubmit={handleUpdateSubmit}
       submitButtonText="Update Language"
     />

@@ -1,4 +1,4 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
@@ -67,9 +67,12 @@ export default function UpdateMetatagForm({ metatagId }: { metatagId: number }) 
   };
 
   return (
-    <BaseFormLayout<MetaTagsBase>
-      fields={fields}
-      fieldValues={fieldValues}
+    <BaseForm<MetaTagsBase>
+      config={{ 
+        fields: fields,
+        defaultValues: fieldValues 
+      }}
+      initialValues={fieldValues}
       onSubmit={handleUpdateSubmit}
       submitButtonText="Update Metatag"
     />

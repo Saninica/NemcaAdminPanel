@@ -1,4 +1,4 @@
-import BaseFormLayout from '../BaseForm';
+import BaseForm from '../BaseForm';
 import { FormField } from '../../types/form';
 import { useEffect, useState } from 'react';
 import { initializeForm } from '../../utils/createForm';
@@ -38,7 +38,7 @@ export default function WebsiteUpdateForm({ websiteId }: { websiteId: number }) 
       setLoading(false);
       setFields(data || []);
       if (website && website.favicon_image) {
-        website.favicon_image = "http://127.0.0.1:8000/admin-api/" + website.favicon_image;
+        website.favicon_image = "http://185.23.72.79/admin-api/" + website.favicon_image;
       }
       setFieldValues(website);
     }
@@ -63,9 +63,12 @@ export default function WebsiteUpdateForm({ websiteId }: { websiteId: number }) 
   };
 
   return (
-    <BaseFormLayout<FormData>
-      fields={fields}
-      fieldValues={fieldValues}
+    <BaseForm<FormData>
+      config={{ 
+        fields: fields,
+        defaultValues: fieldValues 
+      }}
+      initialValues={fieldValues}
       onSubmit={handleUpdateSubmit}
       submitButtonText="Update Website"
     />

@@ -17,7 +17,9 @@ const useWebsite = create<WebsiteStore>()(
                 const domain_url = formData.get('domain_url') as string;
                 
                 const fileFormData = new FormData();
-                fileFormData.append('favicon_image', formData.get('favicon_image') as File);
+                
+                if (formData.get('favicon_image'))
+                    fileFormData.append('favicon_image', formData.get('favicon_image') as File);
 
                 const res = await axiosInstance.post(`website/?name=${encodeURIComponent(name)}&domain_url=${encodeURIComponent(domain_url)}`, 
                 fileFormData,  {
